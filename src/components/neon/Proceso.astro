@@ -1,0 +1,137 @@
+---
+import SectionHead from "./SectionHead.astro";
+
+const pasos = [
+  {
+    titulo: "Entendemos tu negocio",
+    texto:
+      "Relevamos cómo trabajás hoy, qué herramientas usás, dónde se pierde tiempo y qué información necesitás controlar mejor.",
+  },
+  {
+    titulo: "Detectamos procesos desordenados",
+    texto:
+      "Identificamos tareas repetidas, información dispersa, puntos de carga manual y oportunidades de mejora.",
+  },
+  {
+    titulo: "Proponemos una solución concreta",
+    texto:
+      "Puede ser un sistema existente de Norware, una adaptación, una automatización, IA o un desarrollo a medida.",
+  },
+  {
+    titulo: "Implementamos y acompañamos",
+    texto:
+      "No solo entregamos el sistema. Te ayudamos a ponerlo en marcha y acompañamos al equipo para que realmente lo use.",
+  },
+  {
+    titulo: "Mejoramos con uso real",
+    texto:
+      "Medimos, ajustamos y mejoramos según lo que pasa en la operación diaria.",
+  },
+];
+---
+
+<section id="proceso" class="relative border-b border-white/[0.08]">
+  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <SectionHead index="06" tag="Metodología">
+        Cómo <span class="accent text-order">trabajamos</span>
+      </SectionHead>
+
+      <p
+        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
+        data-reveal
+        data-reveal-delay="0.08"
+      >
+        Primero entendemos cómo trabajás. Después diseñamos la herramienta
+        justa.
+      </p>
+    </div>
+
+    <div class="scene relative mt-16">
+      <span
+        data-path-rail
+        class="absolute left-0 right-0 top-[68px] hidden h-px origin-left scale-x-0 bg-gradient-to-r from-order/70 via-order/25 to-transparent lg:block"
+        aria-hidden="true"></span>
+
+      <ol class="grid border-l border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
+        {
+          pasos.map((paso, i) => (
+            <li class="path-node paso relative border-b border-r border-white/[0.08] px-5 py-8 sm:px-6">
+              <span
+                class:list={[
+                  "mono relative z-10 flex h-10 w-10 items-center justify-center rounded border text-[12px]",
+                  i === pasos.length - 1
+                    ? "border-order/50 bg-order/15 text-order"
+                    : "border-white/15 bg-void text-ink-2",
+                ]}
+                style={i === pasos.length - 1 ? "box-shadow:0 0 24px -6px rgba(155,92,255,.8)" : ""}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 class="mt-6 font-display text-[15.5px] font-semibold leading-snug text-ink">
+                {paso.titulo}
+              </h3>
+              <p class="mt-2.5 text-[13.5px] leading-relaxed text-ink-2">
+                {paso.texto}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <!-- Cercanía: antes era una sección entera de 1,3 pantallas para decir
+         que estamos en Río Cuarto. Acá es parte de cómo trabajamos, que es
+         donde realmente pesa. -->
+    <div
+      id="cercania"
+      class="mt-14 flex flex-col gap-6 border-t border-white/[0.08] pt-10 lg:flex-row lg:items-center lg:gap-10"
+      data-reveal
+    >
+      <span
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded border border-order/35 bg-order/[0.08]"
+        style="box-shadow:0 0 30px -8px rgba(155,92,255,.8)"
+        aria-hidden="true"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="text-order">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </span>
+
+      <div>
+        <p class="font-display text-[17px] font-semibold text-ink">
+          Lo hacemos cerca: Río Cuarto y zona
+        </p>
+        <p class="mt-2 max-w-[74ch] text-[14.5px] leading-relaxed text-ink-2">
+          Podemos reunirnos, ver el proceso de cerca y acompañar la
+          implementación en persona hasta que el sistema se usa de verdad. No
+          vendemos sistemas genéricos por mail.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .paso {
+    transition: background-color 0.35s ease;
+  }
+  .paso:hover {
+    background: rgba(155, 92, 255, 0.035);
+  }
+  .paso::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 0;
+    background: var(--order);
+    box-shadow: 0 0 12px rgba(155, 92, 255, 0.9);
+    transition: width 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .paso:hover::after {
+    width: 100%;
+  }
+</style>

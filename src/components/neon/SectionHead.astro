@@ -1,0 +1,40 @@
+---
+// Mismo encabezado en las diez secciones (estructura tomada de la v2),
+// con la tipografía y el color de la v1.
+interface Props {
+  index: string;
+  tag: string;
+  tone?: "order" | "depth" | "chaos";
+  class?: string;
+}
+
+const { index, tag, tone = "order", class: klass = "" } = Astro.props;
+---
+
+<header class:list={["relative", klass]}>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2" data-reveal>
+    <span class="index">{index} / 09</span>
+    <span class="hidden h-px w-10 bg-white/15 sm:block"></span>
+    <span
+      class:list={[
+        "tag",
+        tone === "depth" && "tag--depth",
+        tone === "chaos" && "tag--chaos",
+      ]}
+    >
+      {tag}
+    </span>
+  </div>
+
+  <h2
+    class="mt-7 max-w-[16ch] font-display text-d2 font-bold text-ink"
+    data-reveal
+    data-reveal-delay="0.05"
+  >
+    <slot />
+  </h2>
+
+  <slot name="intro" />
+
+  <div class="rule mt-10" data-reveal data-reveal-delay="0.1"></div>
+</header>

@@ -1,0 +1,30 @@
+---
+// Antes esto era una sección entera compitiendo por la atención. Ahora es
+// una tira: señal de que el estudio sigue trabajando, sin robarle scroll
+// a lo que hace vender.
+const proximas = [
+  "Test para saber si tu empresa necesita IA",
+  "Calculadora de pérdida por stock desordenado",
+  "Recordatorio de service para talleres",
+  "Ficha QR para propiedades",
+];
+---
+
+<section id="herramientas" class="border-b border-white/[0.08]">
+  <div class="mx-auto max-w-[1400px] px-5 py-10 sm:px-8 lg:px-12">
+    <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-10">
+      <p class="mono shrink-0 text-[10px] uppercase tracking-[0.2em] text-ink-3">
+        Herramientas gratuitas · próximamente
+      </p>
+      <ul class="flex flex-wrap gap-2.5">
+        {
+          proximas.map((h) => (
+            <li class="rounded border border-white/[0.09] px-3.5 py-2 text-[12.5px] text-ink-3">
+              {h}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

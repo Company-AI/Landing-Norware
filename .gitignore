@@ -19,3 +19,12 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Repo de referencia clonado a mano (tiene su propio .git)
+.design-md-repo/
+
+# Copia de las skills para otros agentes: duplica .claude/skills
+.agents/
+
+# Preferencias locales de la herramienta, no del proyecto
+.claude/settings.local.json

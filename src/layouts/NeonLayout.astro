@@ -1,0 +1,562 @@
+---
+import { site } from "../utils/site";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const fullTitle = `${site.name} — ${title}`;
+
+// Datos estructurados: negocio local orientado a Río Cuarto y zona.
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Norware Studio",
+  description: site.description,
+  url: site.url,
+  email: site.email,
+  areaServed: {
+    "@type": "City",
+    name: "Río Cuarto",
+    containedInPlace: { "@type": "State", name: "Córdoba, Argentina" },
+  },
+  knowsAbout: [
+    "Software para inmobiliarias",
+    "Sistema para talleres mecánicos y lubricentros",
+    "Control de stock para comercios",
+    "Ecommerce",
+    "Software a medida para pymes",
+    "Automatización de procesos",
+    "Inteligencia artificial aplicada",
+  ],
+});
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#05060A" />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Norware" />
+    <meta property="og:url" content={site.url} />
+    <!-- La tarjeta que aparece cuando alguien pasa el link por WhatsApp -->
+    <meta property="og:image" content={`${site.url}/og.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={site.tagline} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${site.url}/og.png`} />
+
+    <title>{fullTitle}</title>
+
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js-motion");
+      }
+    </script>
+  </head>
+
+  <body class="neon-body">
+    <a href="#contenido" class="skip-link">Ir al contenido</a>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* ==========================================================
+     NORWARE V4 · OBSIDIAN BLUEPRINT
+     La arquitectura de la v2 (riel lateral, índice 01–10, retícula
+     de plano, secciones separadas por hairlines) dibujada con la
+     paleta y los materiales de la v1 (obsidiana, verde orden,
+     violeta profundidad, coral desorden).
+
+     La vuelta de tuerca: la extrusión sólida de la v2 acá es un
+     MARCO DE LUZ desplazado. La profundidad se dibuja con neón,
+     no con sombra.
+     ========================================================== */
+
+  :root {
+    --void: #05060a;
+    --void-2: #070910;
+    --void-3: #0a0d15;
+    --panel: #0a0d14;
+
+    --edge: rgba(255, 255, 255, 0.085);
+    --edge-hi: rgba(255, 255, 255, 0.2);
+
+    --ink: #edf1f7;
+    --ink-2: #98a2b3;
+    --ink-3: #5d6675;
+
+    --order: #9b5cff;
+    --depth: #4c6ef5;
+    --chaos: #ff6a45;
+
+    --rx: 0deg;
+    --ry: 0deg;
+    --tz: 0px;
+    --mx: 50%;
+    --my: 0%;
+
+    --rail: 0px;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --rail: 88px;
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 40px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .neon-body {
+    min-height: 100vh;
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--ink);
+    background-color: var(--void);
+    /* Retícula de plano, en verde y sobre obsidiana: el hilo que
+       recorre todas las secciones (idea de v2, color de v1). */
+    background-image:
+      linear-gradient(to right, rgba(155, 92, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(155, 92, 255, 0.035) 1px, transparent 1px);
+    background-size: 34px 34px;
+    letter-spacing: -0.011em;
+    padding-left: var(--rail);
+  }
+
+  ::selection {
+    background: rgba(155, 92, 255, 0.3);
+    color: #fff;
+  }
+
+  img,
+  svg,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 600;
+  }
+
+  .accent {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .mono,
+  .font-mono {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+
+  /* --------------------------------------------------- etiqueta */
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--order);
+  }
+  .tag::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--order);
+    box-shadow: 0 0 10px rgba(155, 92, 255, 0.9);
+    transform: rotate(45deg);
+  }
+  .tag--depth {
+    color: #9DB0FF;
+  }
+  .tag--depth::before {
+    background: #9DB0FF;
+    box-shadow: 0 0 10px rgba(76, 110, 245, 0.9);
+  }
+  .tag--chaos {
+    color: var(--chaos);
+  }
+  .tag--chaos::before {
+    background: var(--chaos);
+    box-shadow: 0 0 10px rgba(255, 106, 69, 0.9);
+  }
+
+  .index {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+  }
+
+  /* Regla que se dibuja, con un punto de luz al final */
+  .rule {
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(155, 92, 255, 0.45), rgba(255, 255, 255, 0.06));
+    transform-origin: left center;
+  }
+
+  /* ------------------------------------------------------ blade */
+  /* La pieza única: cristal oscuro, cantos rectos y un marco de luz
+     desplazado por detrás. Es la extrusión de la v2 hecha de neón. */
+
+  .blade {
+    position: relative;
+    border-radius: 6px;
+    border: 1px solid var(--edge);
+    background:
+      radial-gradient(120% 120% at var(--mx) var(--my), rgba(255, 255, 255, 0.06), transparent 58%),
+      linear-gradient(158deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.012) 46%, rgba(255, 255, 255, 0) 100%),
+      var(--panel);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 30px 60px -40px rgba(0, 0, 0, 0.95);
+    transform-style: preserve-3d;
+    transition:
+      transform 0.5s cubic-bezier(0.16, 0.84, 0.28, 1),
+      border-color 0.4s ease;
+  }
+
+  .blade::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 6px;
+    border: 1px solid var(--blade-glow, rgba(155, 92, 255, 0.3));
+    transform: translate(var(--blade-d, 10px), var(--blade-d, 10px));
+    transition:
+      transform 0.5s cubic-bezier(0.16, 0.84, 0.28, 1),
+      border-color 0.4s ease,
+      box-shadow 0.4s ease;
+    pointer-events: none;
+  }
+  .blade:hover {
+    border-color: var(--edge-hi);
+  }
+  .blade:hover::before {
+    transform: translate(calc(var(--blade-d, 10px) + 5px), calc(var(--blade-d, 10px) + 5px));
+    border-color: var(--blade-glow-hi, rgba(155, 92, 255, 0.6));
+    box-shadow: 0 0 26px -6px rgba(155, 92, 255, 0.35);
+  }
+
+  .blade--depth {
+    --blade-glow: rgba(76, 110, 245, 0.34);
+    --blade-glow-hi: rgba(76, 110, 245, 0.65);
+  }
+  .blade--depth:hover::before {
+    box-shadow: 0 0 26px -6px rgba(76, 110, 245, 0.4);
+  }
+  .blade--chaos {
+    --blade-glow: rgba(255, 106, 69, 0.3);
+    --blade-glow-hi: rgba(255, 106, 69, 0.6);
+  }
+  .blade--flat::before {
+    display: none;
+  }
+
+  .blade[data-tilt] {
+    transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(var(--tz));
+    will-change: transform;
+  }
+
+  .layer-1 {
+    transform: translateZ(18px);
+  }
+  .layer-2 {
+    transform: translateZ(34px);
+  }
+
+  /* Marcas de esquina: el encuadre técnico de la v2 */
+  .tick {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: var(--order);
+    box-shadow: 0 0 10px rgba(155, 92, 255, 0.8);
+    z-index: 2;
+  }
+  .tick--tl {
+    top: -4px;
+    left: -4px;
+  }
+  .tick--tr {
+    top: -4px;
+    right: -4px;
+  }
+  .tick--bl {
+    bottom: -4px;
+    left: -4px;
+  }
+  .tick--br {
+    bottom: -4px;
+    right: -4px;
+  }
+
+  /* ---------------------------------------------------- escenas */
+
+  .scene {
+    perspective: 1500px;
+    perspective-origin: 50% 45%;
+  }
+  .scene-near {
+    perspective: 900px;
+  }
+  .d3 {
+    transform-style: preserve-3d;
+  }
+
+  /* --------------------------------------------------- botones */
+
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1;
+    padding: 1.05rem 1.7rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition:
+      transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1),
+      box-shadow 0.18s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--order);
+    outline-offset: 3px;
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background: linear-gradient(180deg, #B48CFF 0%, #8B4FEA 100%);
+    box-shadow:
+      0 5px 0 0 #5A2BA6,
+      0 0 30px -8px rgba(155, 92, 255, 0.7);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 7px 0 0 #5A2BA6,
+      0 0 44px -8px rgba(155, 92, 255, 0.85);
+  }
+  .btn-primary:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 0 #5A2BA6;
+  }
+
+  .btn-ghost {
+    color: var(--ink);
+    border: 1px solid var(--edge-hi);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 5px 0 0 rgba(255, 255, 255, 0.045);
+  }
+  .btn-ghost:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(155, 92, 255, 0.45);
+    box-shadow: 0 7px 0 0 rgba(155, 92, 255, 0.14);
+  }
+  .btn-ghost:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    transition: color 0.25s ease;
+  }
+  .link-arrow svg {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .link-arrow:hover {
+    color: var(--order);
+  }
+  .link-arrow:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* ------------------------------------------------------ rubro */
+  /* El visitante elige su rubro arriba de todo y la página le habla
+     a él: cambia la bajada del hero y la pantalla de producto.
+     Sin JS queda el primer rubro visible, que es un estado válido. */
+
+  [data-rubro-panel] {
+    display: none;
+  }
+  [data-rubro-panel="inmobiliarias"] {
+    display: block;
+  }
+  html[data-rubro] [data-rubro-panel] {
+    display: none;
+  }
+  html[data-rubro="inmobiliarias"] [data-rubro-panel="inmobiliarias"],
+  html[data-rubro="talleres"] [data-rubro-panel="talleres"],
+  html[data-rubro="ecommerce"] [data-rubro-panel="ecommerce"],
+  html[data-rubro="a-medida"] [data-rubro-panel="a-medida"] {
+    display: block;
+  }
+
+  /* Fila colapsada de los rubros que NO están seleccionados: la del rubro
+     activo se esconde porque ya está desplegada arriba. */
+  html[data-rubro="inmobiliarias"] [data-rubro-row="inmobiliarias"],
+  html[data-rubro="talleres"] [data-rubro-row="talleres"],
+  html[data-rubro="ecommerce"] [data-rubro-row="ecommerce"],
+  html[data-rubro="a-medida"] [data-rubro-row="a-medida"] {
+    display: none;
+  }
+
+  [data-rubro-btn] {
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  [data-rubro-btn]:hover {
+    transform: translateY(-2px);
+    border-color: rgba(155, 92, 255, 0.45);
+  }
+  [data-rubro-btn].is-on {
+    border-color: rgba(155, 92, 255, 0.75);
+    background: rgba(155, 92, 255, 0.12);
+    color: var(--ink);
+    box-shadow: 0 0 26px -8px rgba(155, 92, 255, 0.85);
+  }
+
+  /* Tarjeta de solución resaltada al llegar desde el selector */
+  .is-target {
+    animation: target-pulse 2.4s ease-out 1;
+  }
+  @keyframes target-pulse {
+    0%,
+    100% {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 30px 60px -40px rgba(0, 0, 0, 0.95);
+    }
+    18%,
+    62% {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 0 0 1px rgba(155, 92, 255, 0.7),
+        0 0 44px -6px rgba(155, 92, 255, 0.55);
+    }
+  }
+
+  /* ------------------------------------------- estados iniciales */
+
+  html.js-motion [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, -60px);
+  }
+
+  .skip-link {
+    position: fixed;
+    top: -60px;
+    left: 1rem;
+    z-index: 90;
+    padding: 0.7rem 1.1rem;
+    border-radius: 6px;
+    background: var(--order);
+    color: #ffffff;
+    font-weight: 600;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .blade[data-tilt] {
+      transform: none !important;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #05060a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2A2150;
+    border: 2px solid #05060a;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2A2150 #05060a;
+  }
+</style>
+
+<script>
+  import "../scripts/motion";
+</script>

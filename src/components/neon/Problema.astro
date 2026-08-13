@@ -1,0 +1,140 @@
+---
+import SectionHead from "./SectionHead.astro";
+
+// Los cuatro primeros son los que un dueño reconoce de una. El resto
+// queda a un clic: quien se identifica no necesita leer los nueve.
+const dolores = [
+  "Planillas que nadie actualiza",
+  "Mensajes importantes perdidos en WhatsApp",
+  "Stock difícil de controlar",
+  "Pagos, contratos o turnos sin seguimiento",
+  "Datos cargados dos veces",
+  "Clientes sin historial",
+  "Reportes poco confiables",
+  "Procesos que dependen de una sola persona",
+  "Falta de alertas y recordatorios",
+];
+const VISIBLES = 4;
+---
+
+<section id="problema" class="relative overflow-hidden border-b border-white/[0.08]">
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background: radial-gradient(70% 55% at 84% 6%, rgba(255,106,69,.09), transparent 62%);"
+    aria-hidden="true">
+  </div>
+
+  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <SectionHead index="02" tag="Estado actual" tone="chaos">
+        Tu negocio funciona, pero cada vez cuesta más <span class="accent text-chaos">controlarlo</span>
+      </SectionHead>
+
+      <p
+        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
+        data-reveal
+        data-reveal-delay="0.08"
+      >
+        Cuando la información queda repartida entre planillas, WhatsApp,
+        papeles o sistemas que no se hablan entre sí, todo se vuelve más lento,
+        más difícil de medir y más dependiente de la memoria del equipo.
+      </p>
+    </div>
+
+    <!-- Tabla de dolores: las celdas se ensamblan desde el desorden -->
+    <ul class="scene mt-14 grid border border-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+      {
+        dolores.map((dolor, i) => (
+          <li
+            class:list={[
+              "chaos-item cell relative flex items-start gap-4 border-b border-white/[0.08] px-5 py-6 sm:px-6",
+              (i + 1) % 2 !== 0 && "sm:border-r",
+              (i + 1) % 4 !== 0 && "lg:border-r",
+              (i + 1) % 2 === 0 && "sm:border-r-0 lg:border-r",
+              i >= VISIBLES && "extra hidden",
+            ]}
+          >
+            <span class="mono mt-0.5 text-[10.5px] tracking-[0.16em] text-chaos/70">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="text-[14.5px] leading-snug text-ink-2">{dolor}</span>
+            <span class="mark" aria-hidden="true" />
+          </li>
+        ))
+      }
+    </ul>
+
+    <button
+      id="ver-mas-dolores"
+      type="button"
+      aria-expanded="false"
+      class="mono mt-6 inline-flex items-center gap-2.5 text-[10.5px] uppercase tracking-[0.2em] text-ink-3 transition-colors hover:text-order"
+    >
+      <span class="h-2 w-2 rotate-45 border border-current" aria-hidden="true"></span>
+      <span id="ver-mas-label">Ver los otros 5</span>
+    </button>
+
+    <div class="mt-16 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+      <p
+        class="max-w-[24ch] font-display text-d2 font-semibold leading-[1.06] text-ink"
+        data-reveal
+      >
+        No siempre necesitás más tecnología.
+        <span class="block text-order">
+          A veces necesitás <span class="accent">ordenar mejor</span> la forma en la que trabajás.
+        </span>
+      </p>
+
+      <div class="blade w-full px-7 py-6 lg:w-[300px]" data-reveal data-reveal-delay="0.06">
+        <p class="tag">Diagnóstico</p>
+        <p class="mt-4 text-[14px] leading-relaxed text-ink-2">
+          Te decimos qué parte de tu operación conviene ordenar primero.
+        </p>
+        <a href="#diagnostico" class="link-arrow mt-5 text-[14px]">
+          Empezar
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cell {
+    transition: background-color 0.35s ease;
+  }
+  .cell:hover {
+    background: rgba(255, 255, 255, 0.025);
+  }
+  .mark {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    margin-top: -4.5px;
+    border: 1px solid rgba(255, 106, 69, 0.6);
+    background: rgba(255, 106, 69, 0.2);
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .cell:hover .mark {
+    transform: rotate(45deg) scale(1);
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("ver-mas-dolores");
+  const label = document.getElementById("ver-mas-label");
+  const extra = document.querySelectorAll<HTMLElement>("#problema .extra");
+
+  btn?.addEventListener("click", () => {
+    const abierto = btn.getAttribute("aria-expanded") === "true";
+    extra.forEach((el) => el.classList.toggle("hidden", abierto));
+    btn.setAttribute("aria-expanded", String(!abierto));
+    if (label) label.textContent = abierto ? "Ver los otros 5" : "Ver menos";
+  });
+</script>

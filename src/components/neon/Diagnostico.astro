@@ -1,0 +1,432 @@
+---
+import SectionHead from "./SectionHead.astro";
+import { site, whatsappDefault } from "../../utils/site";
+
+// Antes: una sección que explicaba en 5 pasos cómo era el diagnóstico y
+// mandaba a un formulario de 10 campos.
+// Ahora: el diagnóstico pasa acá. Tres preguntas, resultado en pantalla,
+// y recién después se pide el contacto.
+//
+// Todo lo que devuelve el resultado sale de las soluciones y los dolores
+// que la web ya declara. No hay diagnóstico "mágico" ni promesas nuevas.
+
+const rubros = [
+  { id: "inmobiliarias", label: "Inmobiliaria" },
+  { id: "talleres", label: "Taller o lubricentro" },
+  { id: "ecommerce", label: "Comercio o ecommerce" },
+  { id: "a-medida", label: "Otro rubro" },
+];
+
+const herramientas = [
+  { id: "planillas", label: "Excel o planillas" },
+  { id: "whatsapp", label: "WhatsApp" },
+  { id: "papel", label: "Papel o cuaderno" },
+  { id: "sistema", label: "Un sistema que ya tengo" },
+];
+
+const dolores = [
+  { id: "stock", label: "Stock" },
+  { id: "turnos", label: "Turnos y agenda" },
+  { id: "pagos", label: "Pagos y vencimientos" },
+  { id: "clientes", label: "Clientes e historial" },
+  { id: "repetitivas", label: "Tareas repetitivas" },
+  { id: "reportes", label: "Reportes" },
+];
+
+const mapa = {
+  soluciones: {
+    inmobiliarias: { nombre: "Norware Inmobiliarias", ancla: "inmobiliarias" },
+    talleres: { nombre: "Norware Talleres", ancla: "talleres" },
+    ecommerce: { nombre: "Norware Ecommerce", ancla: "ecommerce" },
+    "a-medida": { nombre: "Norware a Medida", ancla: "a-medida" },
+  },
+  dolores: {
+    stock: {
+      titulo: "Empezá por el control de stock",
+      porque:
+        "Mientras el stock no sea confiable, las compras, las ventas y los pedidos arrastran el mismo error.",
+    },
+    turnos: {
+      titulo: "Empezá por la agenda",
+      porque:
+        "Es lo que hoy vive en el cuaderno o entre mensajes, y es lo primero que se pierde cuando hay movimiento.",
+    },
+    pagos: {
+      titulo: "Empezá por pagos y vencimientos",
+      porque:
+        "Es donde el desorden deja de costar tiempo y empieza a costar plata.",
+    },
+    clientes: {
+      titulo: "Empezá por la ficha del cliente",
+      porque:
+        "Sin historial, cada consulta arranca de cero y el que sabe es siempre la misma persona.",
+    },
+    repetitivas: {
+      titulo: "Empezá por lo que se repite",
+      porque:
+        "Es la mejora que tu equipo nota en la primera semana, y la más barata de hacer.",
+    },
+    reportes: {
+      titulo: "Empezá por ordenar los datos",
+      porque:
+        "Un reporte vale lo que valen los datos de abajo. Primero la fuente, después el gráfico.",
+    },
+  },
+  senales: {
+    dispersa:
+      "Tenés la información repartida entre planillas y mensajes: el dato existe, pero nadie sabe cuál es el bueno.",
+    papel:
+      "Parte de tu operación vive en papel: eso no se puede consultar, ni medir, ni recordar solo.",
+    sistema:
+      "Ya tenés un sistema andando: probablemente no haya que reemplazarlo entero, sino completarlo y conectarlo.",
+    generico:
+      "Tu operación depende de que alguien se acuerde. Eso funciona hasta que el volumen crece.",
+  },
+};
+---
+
+<section id="diagnostico" class="relative overflow-hidden border-b border-white/[0.08] bg-void-2/70">
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background: radial-gradient(65% 60% at 50% 110%, rgba(155,92,255,.16), transparent 62%);"
+    aria-hidden="true">
+  </div>
+
+  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <SectionHead index="09" tag="Diagnóstico">
+        Tres preguntas y te decimos qué <span class="accent text-order">ordenar</span> primero
+      </SectionHead>
+
+      <p
+        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
+        data-reveal
+        data-reveal-delay="0.08"
+      >
+        El resultado aparece acá abajo, en pantalla. No hace falta que dejes
+        tus datos para verlo: si te sirve, después lo hablamos.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-x-14 gap-y-12 lg:grid-cols-[1fr_0.85fr]">
+      <!-- Preguntas -->
+      <form id="dx" class="space-y-10" novalidate>
+        <fieldset>
+          <legend class="flex items-center gap-3">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+              01
+            </span>
+            <span class="font-display text-[16px] font-semibold text-ink">
+              ¿Qué negocio tenés?
+            </span>
+          </legend>
+          <div class="mt-4 flex flex-wrap gap-2.5">
+            {
+              rubros.map((r) => (
+                <label class="opt">
+                  <input type="radio" name="rubro" value={r.id} class="sr-only" />
+                  <span>{r.label}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="flex items-center gap-3">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+              02
+            </span>
+            <span class="font-display text-[16px] font-semibold text-ink">
+              ¿Con qué trabajás hoy?
+            </span>
+          </legend>
+          <p class="mono mt-2 pl-10 text-[10px] uppercase tracking-[0.18em] text-ink-3">
+            Podés marcar varias
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2.5">
+            {
+              herramientas.map((h) => (
+                <label class="opt">
+                  <input type="checkbox" name="herramienta" value={h.id} class="sr-only" />
+                  <span>{h.label}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="flex items-center gap-3">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+              03
+            </span>
+            <span class="font-display text-[16px] font-semibold text-ink">
+              ¿Qué te está costando más?
+            </span>
+          </legend>
+          <div class="mt-4 flex flex-wrap gap-2.5">
+            {
+              dolores.map((d) => (
+                <label class="opt">
+                  <input type="radio" name="dolor" value={d.id} class="sr-only" />
+                  <span>{d.label}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- Resultado -->
+      <div class="lg:sticky lg:top-8 lg:self-start">
+        <div id="dx-vacio" class="blade blade--flat border-dashed px-7 py-10 text-center">
+          <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
+            Resultado
+          </p>
+          <p class="mt-4 text-[14.5px] leading-relaxed text-ink-3">
+            Elegí tu rubro y qué te está costando más. El resultado aparece acá.
+          </p>
+        </div>
+
+        <div id="dx-resultado" class="blade hidden px-7 py-8" style="--blade-d: 12px;">
+          <p class="tag">Tu resultado</p>
+
+          <h3 id="dx-titulo" class="mt-6 font-display text-d3 font-semibold text-ink"></h3>
+          <p id="dx-porque" class="mt-3.5 text-[14.5px] leading-relaxed text-ink-2"></p>
+
+          <div class="mt-7 border-t border-white/[0.08] pt-6">
+            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+              Lo que vemos
+            </p>
+            <p id="dx-senal" class="mt-2.5 text-[14px] leading-relaxed text-ink-2"></p>
+          </div>
+
+          <div class="mt-7 border-t border-white/[0.08] pt-6">
+            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+              Con qué lo resolvemos
+            </p>
+            <a
+              id="dx-solucion"
+              href="#soluciones"
+              class="link-arrow mt-2.5 text-[15px]"
+            >
+              <span id="dx-solucion-nombre"></span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <a id="dx-wa" href={whatsappDefault} target="_blank" rel="noopener" class="btn btn-primary w-full">
+              Mandarnos esto por WhatsApp
+            </a>
+            <a href={`mailto:${site.email}`} class="btn btn-ghost w-full">
+              Escribir por email
+            </a>
+          </div>
+
+          <p class="mt-5 text-[12.5px] leading-relaxed text-ink-3">
+            Va con tus respuestas ya escritas. Vos revisás el mensaje antes de
+            enviarlo.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cierre: contacto directo, sin pasar por el diagnóstico -->
+    <div
+      id="contacto"
+      class="mt-20 flex flex-col gap-8 border-t border-white/[0.08] pt-12 lg:flex-row lg:items-end lg:justify-between"
+    >
+      <div data-reveal>
+        <h3 class="max-w-[20ch] font-display text-d3 font-semibold text-ink">
+          ¿Preferís contarlo con tus palabras?
+        </h3>
+        <p class="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-ink-2">
+          Escribinos y lo vemos juntos. Sin compromiso: si lo que necesitás no
+          es un sistema, te lo decimos.
+        </p>
+        <p class="mono mt-4 inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.18em] text-order">
+          <span
+            class="h-1.5 w-1.5 rounded-full bg-order"
+            style="box-shadow:0 0 8px rgba(155,92,255,.9)"
+            aria-hidden="true"></span>
+          {site.tiempoRespuesta}
+        </p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row" data-reveal data-reveal-delay="0.06">
+        <a href={whatsappDefault} target="_blank" rel="noopener" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.83 14.12c-.25.7-1.45 1.33-2.02 1.42-.51.08-1.16.11-1.87-.12-.43-.14-.99-.32-1.7-.63-2.99-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.09 0-1.47.77-2.19 1.05-2.49.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.25.6.85 2.07.92 2.22.08.15.13.33.03.53-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.31.31-.13.61.17.3.77 1.27 1.65 2.06 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.13.65-.08.17-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.28.1 1.75.82 2.05.97.3.15.5.23.57.35.08.13.08.72-.18 1.42z"></path>
+          </svg>
+          Hablar por WhatsApp
+        </a>
+        <a href={`mailto:${site.email}`} class="btn btn-ghost">{site.email}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .opt {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+  }
+  .opt span {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.7rem 1.1rem;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1),
+      box-shadow 0.25s ease;
+  }
+  .opt:hover span {
+    transform: translateY(-2px);
+    border-color: rgba(155, 92, 255, 0.4);
+    color: var(--ink);
+  }
+  .opt input:checked + span {
+    border-color: rgba(155, 92, 255, 0.75);
+    background: rgba(155, 92, 255, 0.12);
+    color: var(--ink);
+    box-shadow: 0 0 26px -8px rgba(155, 92, 255, 0.85);
+  }
+  .opt input:focus-visible + span {
+    outline: 2px solid var(--order);
+    outline-offset: 3px;
+  }
+  legend {
+    padding: 0;
+  }
+</style>
+
+<script define:vars={{ mapa, whatsappNumber: site.whatsappNumber }}>
+  const form = document.getElementById("dx");
+  const vacio = document.getElementById("dx-vacio");
+  const panel = document.getElementById("dx-resultado");
+  if (form && vacio && panel) {
+    const el = (id) => document.getElementById(id);
+
+    function senal(herramientas) {
+      if (herramientas.includes("sistema")) return mapa.senales.sistema;
+      if (herramientas.includes("planillas") && herramientas.includes("whatsapp"))
+        return mapa.senales.dispersa;
+      if (herramientas.includes("papel")) return mapa.senales.papel;
+      return mapa.senales.generico;
+    }
+
+    function render() {
+      const data = new FormData(form);
+      const rubro = data.get("rubro");
+      const dolor = data.get("dolor");
+
+      if (!rubro || !dolor) {
+        panel.classList.add("hidden");
+        vacio.classList.remove("hidden");
+        return;
+      }
+
+      const herramientas = data.getAll("herramienta").map(String);
+      const d = mapa.dolores[dolor];
+      const s = mapa.soluciones[rubro];
+
+      el("dx-titulo").textContent = d.titulo;
+      el("dx-porque").textContent = d.porque;
+      el("dx-senal").textContent = senal(herramientas);
+      el("dx-solucion-nombre").textContent = s.nombre;
+      el("dx-solucion").setAttribute("href", "#" + s.ancla);
+
+      // El mensaje de WhatsApp ya lleva el resultado escrito.
+      const etiqueta = (name, value) => {
+        const input = form.querySelector(
+          `input[name="${name}"][value="${value}"]`
+        );
+        return input?.nextElementSibling?.textContent?.trim() || value;
+      };
+
+      const lineas = [
+        "Hola Norware, hice el diagnóstico en la web.",
+        "",
+        `Negocio: ${etiqueta("rubro", rubro)}`,
+        herramientas.length
+          ? `Hoy trabajo con: ${herramientas.map((h) => etiqueta("herramienta", h)).join(", ")}`
+          : null,
+        `Lo que más me cuesta: ${etiqueta("dolor", dolor)}`,
+        "",
+        `Resultado: ${d.titulo}`,
+        `Solución sugerida: ${s.nombre}`,
+        "",
+        "Quiero que lo veamos.",
+      ].filter(Boolean);
+
+      el("dx-wa").setAttribute(
+        "href",
+        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lineas.join("\n"))}`
+      );
+
+      const eraInvisible = panel.classList.contains("hidden");
+      vacio.classList.add("hidden");
+      panel.classList.remove("hidden");
+
+      // En el celular el resultado queda debajo de las preguntas: si es la
+      // primera vez que aparece, lo traemos a la vista.
+      if (eraInvisible && window.matchMedia("(max-width: 1023px)").matches) {
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    form.addEventListener("change", (e) => {
+      // Si acá elige otro rubro, el resto de la página lo acompaña.
+      if (e.target && e.target.name === "rubro") {
+        document.documentElement.dataset.rubro = e.target.value;
+        document
+          .querySelectorAll("[data-rubro-btn]")
+          .forEach((b) =>
+            b.classList.toggle("is-on", b.dataset.rubroBtn === e.target.value)
+          );
+      }
+      render();
+    });
+
+    // Si ya eligió el rubro en el hero, esta pregunta viene contestada.
+    // (El selector del hero corre en DOMContentLoaded, después que este
+    //  script inline, así que hay que sincronizar y quedar a la escucha.)
+    function sincronizarRubro() {
+      const preset = document.documentElement.dataset.rubro;
+      if (!preset) return;
+      const input = form.querySelector(`input[name="rubro"][value="${preset}"]`);
+      if (input && !input.checked) {
+        input.checked = true;
+        render();
+      }
+    }
+
+    new MutationObserver(sincronizarRubro).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-rubro"],
+    });
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", sincronizarRubro, { once: true });
+    } else {
+      sincronizarRubro();
+    }
+
+    render();
+  }
+</script>

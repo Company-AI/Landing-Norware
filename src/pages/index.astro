@@ -1,20 +1,51 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/sections/Hero.astro';
-import Services from '../components/sections/Services.astro';
-import AboutUs from '../components/sections/AboutUs.astro';
-import Features from '../components/sections/Features.astro';
-import CTA from '../components/sections/CTA.astro';
-import Brands from '../components/sections/Brands.astro';
+import NeonLayout from "../layouts/NeonLayout.astro";
+import Rail from "../components/neon/Rail.astro";
+import Hero from "../components/neon/Hero.astro";
+import Producto from "../components/neon/Producto.astro";
+import Problema from "../components/neon/Problema.astro";
+import Soluciones from "../components/neon/Soluciones.astro";
+import CasoReal from "../components/neon/CasoReal.astro";
+import Precio from "../components/neon/Precio.astro";
+import Proceso from "../components/neon/Proceso.astro";
+import IA from "../components/neon/IA.astro";
+import FAQ from "../components/neon/FAQ.astro";
+import Diagnostico from "../components/neon/Diagnostico.astro";
+import Proximamente from "../components/neon/Proximamente.astro";
+import Footer from "../components/neon/Footer.astro";
+
+/*
+ * Orden pensado desde la cabeza de un dueño de pyme que entra por primera vez:
+ *
+ *   Hero        ¿me hablás a mí?        → elige su rubro
+ *   01 Producto ¿qué me das?            → ve las pantallas de SU rubro
+ *   02 Problema ¿me entendés?           → 4 dolores, el resto a un clic
+ *   03 Soluciones ¿qué ofrecés?
+ *   04 Caso real ¿alguien lo usa?
+ *   05 Precio   ¿me da el cuero?        → antes de pedirle nada
+ *   06 Proceso  ¿cómo lo hacés?
+ *   07 IA       ¿me vas a vender humo?
+ *   08 FAQ      ¿qué pasa si...?
+ *   09 Cercanía ¿estás cerca?
+ *   10 Diagnóstico + contacto → recién acá se le pide el contacto
+ */
 ---
 
-<Layout title="Welcome to AgenceX">
-	<main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
-		<Hero/>
-		<Brands/>
-		<Services/>
-		<AboutUs/>
-		<Features/>
-		<CTA/>
-	</main>
-</Layout>
+<!-- La descripción sale de `site.description`: una sola fuente de verdad. -->
+<NeonLayout title="Sistemas simples para ordenar tu negocio">
+  <Rail />
+  <main id="contenido">
+    <Hero />
+    <Producto />
+    <Problema />
+    <Soluciones />
+    <CasoReal />
+    <Precio />
+    <Proceso />
+    <IA />
+    <FAQ />
+    <Diagnostico />
+    <Proximamente />
+  </main>
+  <Footer />
+</NeonLayout>
