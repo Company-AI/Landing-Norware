@@ -1,0 +1,83 @@
+---
+import { rubros } from "../../utils/prime";
+
+/**
+ * "Para cada rubro": carrusel horizontal de tarjetas con foto,
+ * degradado inferior y píldora con brillo. Flechas arriba a la derecha.
+ */
+---
+
+<section id="rubros" class="pt-28 sm:pt-32">
+  <div class="mx-auto max-w-[1280px] px-5 sm:px-10">
+    <p class="reveal text-[14px] font-medium text-[#616161]">
+      <span class="braille" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      Soluciones
+    </p>
+    <div class="flex items-end justify-between gap-6">
+      <h2
+        class="reveal pf-display mt-4 font-medium leading-[1.16] text-[#212121]"
+        style="font-size: clamp(2rem, 3.4vw, 3rem);"
+      >
+        Para cada rubro.
+      </h2>
+      <div class="hidden gap-2.5 pb-1 sm:flex">
+        <button
+          type="button"
+          class="pf-rubros-prev flex h-12 w-12 items-center justify-center rounded-full border border-black/[0.1] bg-white text-[#1A1814] transition-colors hover:bg-black/[0.04]"
+          aria-label="Rubro anterior"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+        </button>
+        <button
+          type="button"
+          class="pf-rubros-next flex h-12 w-12 items-center justify-center rounded-full border border-black/[0.1] bg-white text-[#1A1814] transition-colors hover:bg-black/[0.04]"
+          aria-label="Rubro siguiente"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- El carrusel sangra hasta el borde de la ventana -->
+  <div
+    id="pf-rubros-track"
+    class="pf-scroll mt-10 flex snap-x gap-4 overflow-x-auto scroll-smooth px-5 sm:px-[max(2.5rem,calc((100vw-1280px)/2+2.5rem))]"
+  >
+    {
+      rubros.map((r) => (
+        <article class="relative w-[300px] shrink-0 snap-start overflow-hidden rounded-xl bg-[#1A1814] sm:w-[440px]">
+          <img src={r.foto} alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <div
+            class="absolute inset-0"
+            style="background: linear-gradient(to top, rgba(10,9,8,0.88) 0%, rgba(10,9,8,0.32) 45%, rgba(10,9,8,0.08) 70%);"
+            aria-hidden="true"
+          />
+          <div class="relative flex h-[430px] flex-col justify-end p-6 sm:h-[480px] sm:p-7">
+            <h3 class="pf-onimg pf-display text-[20px] font-medium text-white">{r.titulo}</h3>
+            <p class="pf-onimg mt-1.5 max-w-[34ch] text-[14px] leading-relaxed text-white/85">{r.detalle}</p>
+            <a
+              href={r.cta.href}
+              target={r.cta.href.startsWith("http") ? "_blank" : undefined}
+              rel={r.cta.href.startsWith("http") ? "noopener" : undefined}
+              class="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13.5px] font-medium text-[#211E1C] shadow-[0_0_24px_rgba(74,222,189,0.45)] transition-transform hover:scale-[1.04]"
+            >
+              {r.cta.label}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("pf-rubros-track");
+  document.querySelector(".pf-rubros-prev")?.addEventListener("click", () => {
+    track?.scrollBy({ left: -480, behavior: "smooth" });
+  });
+  document.querySelector(".pf-rubros-next")?.addEventListener("click", () => {
+    track?.scrollBy({ left: 480, behavior: "smooth" });
+  });
+</script>

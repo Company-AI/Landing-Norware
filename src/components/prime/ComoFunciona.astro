@@ -1,0 +1,290 @@
+---
+import LogoMark from "./LogoMark.astro";
+/**
+ * "De pregunta a respuesta": tarjeta blanca con el diagrama animado
+ * caos → sistema → respuesta. Las fuentes desordenadas entran por la
+ * izquierda; a la derecha el sistema tipea una pregunta y los módulos
+ * cambian para RESPONDERLA (el primero es la respuesta directa y se
+ * resalta; el resto es contexto).
+ */
+// En desktop los chips se dispersan (left/top en % y rotación):
+// información repartida por cualquier lado, sin orden. En mobile fluyen
+// en fila para no pisarse.
+const fuentes = [
+  { label: "Planillas", color: "#1F7A6D", left: "2%", top: "6%", rot: "-6deg" },
+  { label: "WhatsApp", color: "#16A34A", left: "48%", top: "20%", rot: "5deg" },
+  { label: "Cuaderno", color: "#C2410C", left: "12%", top: "38%", rot: "3deg" },
+  { label: "Papeles", color: "#4F46E5", left: "55%", top: "56%", rot: "-5deg" },
+  { label: "Mails", color: "#BE185D", left: "18%", top: "74%", rot: "7deg" },
+];
+
+// Cada pregunta con sus cuatro módulos de respuesta.
+// El primer módulo contesta la pregunta; los otros tres acompañan.
+const escenas = [
+  {
+    pregunta: "¿Quién no pagó este mes?",
+    modulos: [
+      { valor: "3", label: "Inquilinos por cobrar" },
+      { valor: "14", label: "Pagos al día" },
+      { valor: "3", label: "Recordatorios enviados" },
+      { valor: "1", label: "Vence hoy" },
+    ],
+  },
+  {
+    pregunta: "¿Qué contratos vencen pronto?",
+    modulos: [
+      { valor: "14", label: "Vencen este mes" },
+      { valor: "5", label: "Avisos ya enviados" },
+      { valor: "2", label: "En renovación" },
+      { valor: "96", label: "Contratos activos" },
+    ],
+  },
+  {
+    pregunta: "¿Cuándo vuelve la Hilux de Ferreyra?",
+    modulos: [
+      { valor: "15:30", label: "Turno de hoy, service" },
+      { valor: "10.000", label: "Km del service" },
+      { valor: "3", label: "Services anteriores" },
+      { valor: "6", label: "Turnos de mañana" },
+    ],
+  },
+  {
+    pregunta: "¿Qué producto se está por acabar?",
+    modulos: [
+      { valor: "4", label: "Filtro W68, quedan" },
+      { valor: "2", label: "Productos en crítico" },
+      { valor: "18", label: "Ventas del mes" },
+      { valor: "1", label: "Pedido sugerido" },
+    ],
+  },
+];
+---
+
+<section id="como-funciona" class="mx-auto max-w-[1280px] px-5 pt-28 sm:px-10 sm:pt-32">
+  <p class="reveal text-[14px] font-medium text-[#616161]">
+    <span class="braille" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    Preguntá. Entendé. Actuá.
+  </p>
+  <h2
+    class="reveal pf-display mt-4 max-w-[16ch] font-medium leading-[1.16] text-[#212121]"
+    style="font-size: clamp(2rem, 3.4vw, 3rem);"
+  >
+    Cómo un negocio desordenado se vuelve un sistema.
+  </h2>
+
+  <!-- Tarjeta demo -->
+  <div
+    class="reveal mt-10 overflow-hidden rounded-2xl bg-white shadow-[0_1px_2px_rgba(26,24,20,0.04)]"
+    id="pf-demo"
+    data-escenas={JSON.stringify(escenas)}
+  >
+    <div class="grid gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_auto_1.15fr] lg:items-center lg:gap-8">
+      <!-- Fuentes desordenadas -->
+      <div>
+        <p class="mb-3 text-[13px] font-medium text-[#9E9E9E]">Hoy tu información vive acá</p>
+        <div class="relative flex flex-wrap gap-2.5 lg:block lg:h-[360px]">
+          {
+            fuentes.map((f, i) => (
+              <span
+                class="pf-demo-fuente inline-flex w-fit items-center gap-2.5 rounded-xl border border-black/[0.07] bg-white px-4 py-2.5 text-[14.5px] font-medium text-[#212121] shadow-[0_2px_8px_rgba(26,24,20,0.08)] lg:absolute"
+                style={`transition-delay:${i * 90}ms; --rot:${f.rot}; left:${f.left}; top:${f.top};`}
+              >
+                <span class="h-2 w-2 rounded-full" style={`background:${f.color}`} aria-hidden="true" />
+                {f.label}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Conector -->
+      <div class="hidden flex-col items-center lg:flex" aria-hidden="true">
+        <svg width="120" height="200" viewBox="0 0 120 200" fill="none">
+          <path class="pf-demo-linea" d="M4 24 C 70 24, 60 100, 116 100" stroke="#1A1814" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 5" />
+          <path class="pf-demo-linea" d="M4 62 C 66 62, 58 100, 116 100" stroke="#1A1814" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 5" style="animation-delay:.3s" />
+          <path class="pf-demo-linea" d="M4 100 H 116" stroke="#1A1814" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 5" style="animation-delay:.6s" />
+          <path class="pf-demo-linea" d="M4 138 C 66 138, 58 100, 116 100" stroke="#1A1814" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 5" style="animation-delay:.9s" />
+          <path class="pf-demo-linea" d="M4 176 C 70 176, 60 100, 116 100" stroke="#1A1814" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 5" style="animation-delay:1.2s" />
+        </svg>
+      </div>
+
+      <!-- Sistema -->
+      <div class="rounded-2xl bg-[#1A1814] p-5 sm:p-6">
+        <div class="flex items-center gap-2 text-white/80">
+          <LogoMark class="h-5 w-5" />
+          <span class="text-[13.5px] font-medium">Tu sistema</span>
+        </div>
+
+        <!-- Pregunta tipeada -->
+        <div class="mt-4 rounded-xl bg-white/[0.07] px-4 py-3.5">
+          <p class="text-[14.5px] text-white/90">
+            <span id="pf-demo-pregunta"></span><span class="pf-demo-cursor" aria-hidden="true">|</span>
+          </p>
+        </div>
+
+        <!-- Respuesta en módulos: el primero contesta la pregunta -->
+        <div class="mt-3 grid grid-cols-2 gap-2" id="pf-demo-modulos">
+          {
+            escenas[0].modulos.map((m, i) => (
+              <div
+                class:list={[
+                  "pf-demo-modulo rounded-xl px-4 py-3",
+                  i === 0
+                    ? "border border-[#2DD4A8]/40 bg-[#2DD4A8]/[0.08]"
+                    : "border border-white/[0.08] bg-white/[0.04]",
+                ]}
+                style={`transition-delay:${i * 110}ms`}
+              >
+                <p class="pf-demo-valor pf-display text-[20px] font-medium text-white">{m.valor}</p>
+                <p class="pf-demo-label mt-0.5 text-[12px] text-white/70">{m.label}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="mt-4 text-[12.5px] leading-relaxed text-white/60">
+          Cada dato responde a su fuente. Nada depende de la memoria del equipo.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Estados iniciales: se activan cuando la tarjeta entra al viewport */
+  .pf-demo-fuente {
+    opacity: 0;
+    transform: translateX(-14px) rotate(var(--rot, 0deg));
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* En mobile los chips fluyen en fila: left/top no aplican (position static) */
+  .pf-demo-modulo {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #pf-demo.is-live .pf-demo-fuente {
+    opacity: 1;
+    transform: rotate(var(--rot, 0deg));
+  }
+  /* Los módulos aparecen recién cuando hay una respuesta que mostrar */
+  #pf-demo.is-live .pf-demo-modulo.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .pf-demo-linea {
+    stroke-dashoffset: 60;
+    animation: pf-linea 2.4s linear infinite paused;
+  }
+  #pf-demo.is-live .pf-demo-linea {
+    animation-play-state: running;
+  }
+  @keyframes pf-linea {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .pf-demo-cursor {
+    animation: pf-cursor 1s steps(1) infinite;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  @keyframes pf-cursor {
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pf-demo-fuente,
+    .pf-demo-modulo {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none;
+    }
+    .pf-demo-linea,
+    .pf-demo-cursor {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const demo = document.getElementById("pf-demo");
+  const preguntaEl = document.getElementById("pf-demo-pregunta");
+  const modulosEls = [...document.querySelectorAll<HTMLElement>("#pf-demo-modulos .pf-demo-modulo")];
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  interface Escena {
+    pregunta: string;
+    modulos: { valor: string; label: string }[];
+  }
+  const escenas: Escena[] = JSON.parse(demo?.dataset.escenas || "[]");
+
+  let idx = 0;
+  let tipeo: number | undefined;
+
+  function ocultarModulos() {
+    modulosEls.forEach((m) => m.classList.remove("is-in"));
+  }
+
+  /** Vuelca la respuesta de la escena y re-dispara la entrada escalonada. */
+  function responder(escena: Escena) {
+    modulosEls.forEach((m, i) => {
+      const dato = escena.modulos[i];
+      if (!dato) return;
+      const v = m.querySelector<HTMLElement>(".pf-demo-valor");
+      const l = m.querySelector<HTMLElement>(".pf-demo-label");
+      if (v) v.textContent = dato.valor;
+      if (l) l.textContent = dato.label;
+    });
+    // reflow para que la transición de entrada corra de nuevo
+    void modulosEls[0]?.offsetWidth;
+    modulosEls.forEach((m) => m.classList.add("is-in"));
+  }
+
+  function escribir(texto: string, done: () => void) {
+    if (!preguntaEl) return;
+    let i = 0;
+    preguntaEl.textContent = "";
+    window.clearInterval(tipeo);
+    tipeo = window.setInterval(() => {
+      i++;
+      preguntaEl.textContent = texto.slice(0, i);
+      if (i >= texto.length) {
+        window.clearInterval(tipeo);
+        done();
+      }
+    }, 45);
+  }
+
+  function ciclo() {
+    const escena = escenas[idx];
+    ocultarModulos();
+    escribir(escena.pregunta, () => {
+      // pequeña pausa de "procesando" antes de responder
+      window.setTimeout(() => responder(escena), 350);
+      window.setTimeout(() => {
+        idx = (idx + 1) % escenas.length;
+        ciclo();
+      }, 4200);
+    });
+  }
+
+  if (demo && escenas.length && "IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          demo.classList.add("is-live");
+          ciclo();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(demo);
+  } else {
+    // Sin animaciones: mostrar la primera escena completa, estática.
+    demo?.classList.add("is-live");
+    if (preguntaEl && escenas.length) preguntaEl.textContent = escenas[0].pregunta;
+    modulosEls.forEach((m) => m.classList.add("is-in"));
+  }
+</script>

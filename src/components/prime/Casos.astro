@@ -1,0 +1,158 @@
+---
+import { casosSlides, acentos } from "../../utils/prime";
+
+/**
+ * Carrusel de casos: tarjetas a lo ancho con foto de fondo, velo
+ * oscuro y frase grande. Autoplay + flechas + puntos + arrastre.
+ * Las frases son descriptivas, sin comillas: no hay testimonios
+ * textuales aprobados todavía (ver nota en negocio.ts).
+ */
+---
+
+<section id="casos" class="mx-auto max-w-[1280px] px-5 pt-28 sm:px-10 sm:pt-32">
+  <div id="pf-casos" class="relative">
+    <div
+      class="pf-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
+      id="pf-casos-track"
+    >
+      {
+        casosSlides.map((c) => (
+          <article class="relative w-full shrink-0 snap-center overflow-hidden rounded-3xl bg-[#1A1814]">
+            <img
+              src={c.foto}
+              alt=""
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(95deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%), linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 40%), linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 28%);" aria-hidden="true" />
+            <div class="relative flex min-h-[560px] flex-col justify-between p-7 sm:min-h-[620px] sm:p-14">
+              <span class="flex w-fit items-center gap-2.5 rounded-full bg-black/35 py-1.5 pl-1.5 pr-4 backdrop-blur-md">
+                <span
+                  class="flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-semibold text-white"
+                  style={`background:${acentos[c.color].chip}`}
+                >
+                  {c.chip}
+                </span>
+                <span class="text-[14px] font-medium text-white">{c.empresa}</span>
+              </span>
+
+              <div class="max-w-3xl py-10">
+                <p
+                  class="pf-onimg pf-display font-medium leading-[1.18] text-white"
+                  style="font-size: clamp(1.7rem, 3.3vw, 2.9rem);"
+                >
+                  {c.frase}
+                </p>
+                <a
+                  href={c.cta.href}
+                  class="mt-7 inline-flex items-center rounded-full bg-white px-5 py-2.5 text-[15px] font-medium text-[#211E1C] transition-transform hover:scale-[1.03]"
+                >
+                  {c.cta.label}
+                </a>
+              </div>
+
+              <div>
+                <p class="pf-onimg text-[15px] font-medium text-white">{c.empresa}</p>
+                <p class="pf-onimg text-[13.5px] text-white/75">{c.detalle}</p>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Flechas -->
+    <button
+      type="button"
+      class="pf-casos-prev absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#1A1814] shadow-[0_4px_16px_rgba(26,24,20,0.18)] transition-transform hover:scale-105 sm:flex"
+      aria-label="Caso anterior"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+    </button>
+    <button
+      type="button"
+      class="pf-casos-next absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#1A1814] shadow-[0_4px_16px_rgba(26,24,20,0.18)] transition-transform hover:scale-105 sm:flex"
+      aria-label="Caso siguiente"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+    </button>
+
+    <!-- Puntos -->
+    <div class="mt-5 flex justify-center gap-2" id="pf-casos-dots" role="tablist" aria-label="Casos">
+      {
+        casosSlides.map((_, i) => (
+          <button
+            type="button"
+            role="tab"
+            aria-label={`Ir al caso ${i + 1}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            class:list={[
+              "h-2 rounded-full transition-all",
+              i === 0 ? "w-5 bg-[#1A1814]" : "w-2 bg-[#1A1814]/25",
+            ]}
+            data-i={String(i)}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("pf-casos-track");
+  const dots = [...document.querySelectorAll<HTMLButtonElement>("#pf-casos-dots button")];
+  const prev = document.querySelector<HTMLButtonElement>(".pf-casos-prev");
+  const next = document.querySelector<HTMLButtonElement>(".pf-casos-next");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (track) {
+    const n = track.children.length;
+    let actual = 0;
+    let timer: number | undefined;
+
+    function pintar(i: number) {
+      actual = i;
+      dots.forEach((d, j) => {
+        const activa = j === i;
+        d.setAttribute("aria-selected", String(activa));
+        d.classList.toggle("w-5", activa);
+        d.classList.toggle("bg-[#1A1814]", activa);
+        d.classList.toggle("w-2", !activa);
+        d.classList.toggle("bg-[#1A1814]/25", !activa);
+      });
+    }
+
+    function ir(i: number) {
+      const j = (i + n) % n;
+      track.scrollTo({ left: j * track.clientWidth, behavior: reduce ? "auto" : "smooth" });
+      pintar(j);
+    }
+
+    function programar() {
+      window.clearInterval(timer);
+      if (reduce) return;
+      timer = window.setInterval(() => ir(actual + 1), 7000);
+    }
+
+    prev?.addEventListener("click", () => { ir(actual - 1); programar(); });
+    next?.addEventListener("click", () => { ir(actual + 1); programar(); });
+    dots.forEach((d) => d.addEventListener("click", () => { ir(Number(d.dataset.i)); programar(); }));
+
+    // Sincronizar puntos con el arrastre manual
+    let scrollT: number | undefined;
+    track.addEventListener("scroll", () => {
+      window.clearTimeout(scrollT);
+      scrollT = window.setTimeout(() => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== actual) pintar(Math.min(n - 1, Math.max(0, i)));
+      }, 80);
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) window.clearInterval(timer);
+      else programar();
+    });
+
+    programar();
+  }
+</script>

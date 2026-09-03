@@ -1,33 +1,36 @@
 ---
-// Mismo encabezado en las diez secciones (estructura tomada de la v2),
-// con la tipografía y el color de la v1.
+// Encabezado de sección.
+//
+// Antes mostraba "01 / 10" al lado de la etiqueta. Numerar las secciones
+// es vocabulario de documentación técnica: ninguno de los estudios que se
+// tomaron de referencia lo hace, y para el dueño de una pyme el número no
+// significa nada. Queda solo la etiqueta.
+//
+// El orden real de la página sigue declarado en `secciones.ts`, que es de
+// donde salen los dos caminos del hero.
 interface Props {
-  index: string;
   tag: string;
   tone?: "order" | "depth" | "chaos";
   class?: string;
 }
 
-const { index, tag, tone = "order", class: klass = "" } = Astro.props;
+const { tag, tone = "order", class: klass = "" } = Astro.props;
 ---
 
 <header class:list={["relative", klass]}>
-  <div class="flex flex-wrap items-center gap-x-5 gap-y-2" data-reveal>
-    <span class="index">{index} / 09</span>
-    <span class="hidden h-px w-10 bg-white/15 sm:block"></span>
-    <span
-      class:list={[
-        "tag",
-        tone === "depth" && "tag--depth",
-        tone === "chaos" && "tag--chaos",
-      ]}
-    >
-      {tag}
-    </span>
-  </div>
+  <span
+    class:list={[
+      "tag",
+      tone === "depth" && "tag--depth",
+      tone === "chaos" && "tag--chaos",
+    ]}
+    data-reveal
+  >
+    {tag}
+  </span>
 
   <h2
-    class="mt-7 max-w-[16ch] font-display text-d2 font-bold text-ink"
+    class="mt-5 max-w-[17ch] font-display text-d2 font-semibold text-ink"
     data-reveal
     data-reveal-delay="0.05"
   >
@@ -36,5 +39,5 @@ const { index, tag, tone = "order", class: klass = "" } = Astro.props;
 
   <slot name="intro" />
 
-  <div class="rule mt-10" data-reveal data-reveal-delay="0.1"></div>
+  <div class="rule mt-8" data-reveal data-reveal-delay="0.1"></div>
 </header>

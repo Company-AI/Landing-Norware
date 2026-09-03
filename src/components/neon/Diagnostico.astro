@@ -85,16 +85,16 @@ const mapa = {
 };
 ---
 
-<section id="diagnostico" class="relative overflow-hidden border-b border-white/[0.08] bg-void-2/70">
+<section id="diagnostico" class="relative overflow-hidden border-b border-line bg-paper-2">
   <div
     class="pointer-events-none absolute inset-0"
-    style="background: radial-gradient(65% 60% at 50% 110%, rgba(155,92,255,.16), transparent 62%);"
+    style="background: radial-gradient(65% 60% at 50% 110%, rgba(109, 53, 204, .07), transparent 62%);"
     aria-hidden="true">
   </div>
 
-  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+  <div class="relative mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="09" tag="Diagnóstico">
+      <SectionHead tag="Diagnóstico">
         Tres preguntas y te decimos qué <span class="accent text-order">ordenar</span> primero
       </SectionHead>
 
@@ -113,7 +113,7 @@ const mapa = {
       <form id="dx" class="space-y-10" novalidate>
         <fieldset>
           <legend class="flex items-center gap-3">
-            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[11px] text-order">
               01
             </span>
             <span class="font-display text-[16px] font-semibold text-ink">
@@ -134,14 +134,14 @@ const mapa = {
 
         <fieldset>
           <legend class="flex items-center gap-3">
-            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[11px] text-order">
               02
             </span>
             <span class="font-display text-[16px] font-semibold text-ink">
               ¿Con qué trabajás hoy?
             </span>
           </legend>
-          <p class="mono mt-2 pl-10 text-[10px] uppercase tracking-[0.18em] text-ink-3">
+          <p class="mono mt-2 pl-10 text-[11px] uppercase tracking-[0.18em] text-ink-3">
             Podés marcar varias
           </p>
           <div class="mt-4 flex flex-wrap gap-2.5">
@@ -158,7 +158,7 @@ const mapa = {
 
         <fieldset>
           <legend class="flex items-center gap-3">
-            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[10.5px] text-order">
+            <span class="mono flex h-7 w-7 items-center justify-center rounded border border-order/30 bg-order/[0.08] text-[11px] text-order">
               03
             </span>
             <span class="font-display text-[16px] font-semibold text-ink">
@@ -181,7 +181,7 @@ const mapa = {
       <!-- Resultado -->
       <div class="lg:sticky lg:top-8 lg:self-start">
         <div id="dx-vacio" class="blade blade--flat border-dashed px-7 py-10 text-center">
-          <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
+          <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3">
             Resultado
           </p>
           <p class="mt-4 text-[14.5px] leading-relaxed text-ink-3">
@@ -195,15 +195,15 @@ const mapa = {
           <h3 id="dx-titulo" class="mt-6 font-display text-d3 font-semibold text-ink"></h3>
           <p id="dx-porque" class="mt-3.5 text-[14.5px] leading-relaxed text-ink-2"></p>
 
-          <div class="mt-7 border-t border-white/[0.08] pt-6">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+          <div class="mt-7 border-t border-line pt-6">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Lo que vemos
             </p>
             <p id="dx-senal" class="mt-2.5 text-[14px] leading-relaxed text-ink-2"></p>
           </div>
 
-          <div class="mt-7 border-t border-white/[0.08] pt-6">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+          <div class="mt-7 border-t border-line pt-6">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Con qué lo resolvemos
             </p>
             <a
@@ -239,7 +239,7 @@ const mapa = {
     <!-- Cierre: contacto directo, sin pasar por el diagnóstico -->
     <div
       id="contacto"
-      class="mt-20 flex flex-col gap-8 border-t border-white/[0.08] pt-12 lg:flex-row lg:items-end lg:justify-between"
+      class="mt-20 flex flex-col gap-8 border-t border-line pt-12 lg:flex-row lg:items-end lg:justify-between"
     >
       <div data-reveal>
         <h3 class="max-w-[20ch] font-display text-d3 font-semibold text-ink">
@@ -249,10 +249,9 @@ const mapa = {
           Escribinos y lo vemos juntos. Sin compromiso: si lo que necesitás no
           es un sistema, te lo decimos.
         </p>
-        <p class="mono mt-4 inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.18em] text-order">
+        <p class="mono mt-4 inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.18em] text-order">
           <span
             class="h-1.5 w-1.5 rounded-full bg-order"
-            style="box-shadow:0 0 8px rgba(155,92,255,.9)"
             aria-hidden="true"></span>
           {site.tiempoRespuesta}
         </p>
@@ -281,10 +280,10 @@ const mapa = {
     display: inline-flex;
     align-items: center;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    background: var(--paper-2);
     padding: 0.7rem 1.1rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
     font-size: 13.5px;
     font-weight: 500;
     color: var(--ink-2);
@@ -297,14 +296,14 @@ const mapa = {
   }
   .opt:hover span {
     transform: translateY(-2px);
-    border-color: rgba(155, 92, 255, 0.4);
+    border-color: var(--order);
     color: var(--ink);
   }
   .opt input:checked + span {
-    border-color: rgba(155, 92, 255, 0.75);
-    background: rgba(155, 92, 255, 0.12);
+    border-color: var(--order);
+    background: var(--order-wash);
     color: var(--ink);
-    box-shadow: 0 0 26px -8px rgba(155, 92, 255, 0.85);
+    
   }
   .opt input:focus-visible + span {
     outline: 2px solid var(--order);

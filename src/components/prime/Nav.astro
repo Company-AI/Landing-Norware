@@ -1,0 +1,134 @@
+---
+import { whatsappDefault } from "../../utils/site";
+import LogoMark from "./LogoMark.astro";
+
+const links = [
+  { label: "Productos", href: "#productos" },
+  { label: "Rubros", href: "#rubros" },
+  { label: "Casos", href: "#casos" },
+  { label: "Criterio", href: "#confianza" },
+  { label: "Resultados", href: "#resultados" },
+];
+---
+
+<!-- Barra flotante tipo tarjeta, con margen respecto del borde -->
+<header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+  <nav
+    class="mx-auto flex h-[60px] max-w-[1280px] items-center justify-between rounded-2xl border border-black/[0.06] bg-white/90 pl-5 pr-2.5 shadow-[0_8px_32px_rgba(26,24,20,0.08)] backdrop-blur-xl sm:h-[64px] sm:pl-6 sm:pr-3"
+    aria-label="Navegación principal"
+  >
+    <a href="#" class="flex items-center gap-2" aria-label="Norware, inicio">
+      <LogoMark class="h-[30px] w-[30px]" />
+      <span class="pf-display text-[19px] font-semibold tracking-[-0.01em] text-[#1A1814]">Norware</span>
+    </a>
+
+    <ul class="hidden items-center gap-7 lg:flex">
+      {
+        links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class="text-[15px] font-medium text-[#212121] transition-colors hover:text-black/50"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden items-center gap-2 lg:flex">
+      <a
+        href={whatsappDefault}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center rounded-full border border-black/[0.12] bg-white px-4 py-2.5 text-[15px] font-medium text-[#211E1C] transition-colors hover:bg-black/[0.04]"
+      >
+        WhatsApp
+      </a>
+      <a
+        href="#contacto"
+        class="inline-flex items-center rounded-full bg-[#1A1814] px-4 py-2.5 text-[15px] font-medium text-white transition-colors hover:bg-black"
+      >
+        Hacer diagnóstico
+      </a>
+    </div>
+
+    <!-- Hamburguesa -->
+    <button
+      id="pf-nav-toggle"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#1A1814] lg:hidden"
+    >
+      <svg id="pf-nav-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+      <svg id="pf-nav-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div
+    id="pf-nav-menu"
+    class="mx-auto mt-2 hidden max-w-[1280px] rounded-2xl border border-black/[0.06] bg-white/95 p-5 shadow-[0_16px_48px_rgba(26,24,20,0.12)] backdrop-blur-xl lg:hidden"
+  >
+    <ul class="flex flex-col">
+      {
+        links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class="pf-nav-link block border-b border-black/[0.05] py-3.5 text-[17px] font-medium text-[#1A1814]"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-4 flex flex-col gap-2">
+      <a
+        href="#contacto"
+        class="pf-nav-link inline-flex items-center justify-center rounded-full bg-[#1A1814] px-4 py-3 text-[15px] font-medium text-white"
+      >
+        Hacer diagnóstico
+      </a>
+      <a
+        href={whatsappDefault}
+        target="_blank"
+        rel="noopener"
+        class="pf-nav-link inline-flex items-center justify-center rounded-full border border-black/[0.12] bg-white px-4 py-3 text-[15px] font-medium text-[#211E1C]"
+      >
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("pf-nav-toggle");
+  const menu = document.getElementById("pf-nav-menu");
+  const iconOpen = document.getElementById("pf-nav-open");
+  const iconClose = document.getElementById("pf-nav-close");
+
+  function setOpen(open: boolean) {
+    menu?.classList.toggle("hidden", !open);
+    iconOpen?.classList.toggle("hidden", open);
+    iconClose?.classList.toggle("hidden", !open);
+    toggle?.setAttribute("aria-expanded", String(open));
+    toggle?.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+  document.querySelectorAll(".pf-nav-link").forEach((el) =>
+    el.addEventListener("click", () => setOpen(false))
+  );
+</script>

@@ -1,0 +1,129 @@
+---
+import { site, whatsappDefault } from "../../utils/site";
+
+// Reemplaza al riel vertical de la versión anterior.
+//
+// Aquel riel tenía el índice "01 / 10" en puntitos, un cubo 3D girando
+// y una barra de progreso de scroll: vocabulario de documentación técnica
+// o de herramienta para desarrolladores. Ninguno de los estudios que se
+// tomaron de referencia (thoughtbot, Xmartlabs, basement) usa algo así:
+// todos tienen un header común, con el logo a la izquierda, cuatro links
+// y un botón de contacto. Es lo que un dueño de pyme ya sabe leer.
+
+const links = [
+  { label: "Soluciones", href: "#soluciones" },
+  { label: "Clientes", href: "#caso-real" },
+  { label: "El estudio", href: "#estudio" },
+  { label: "Preguntas", href: "#faq" },
+];
+---
+
+<header
+  id="nw-header"
+  class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md"
+>
+  <div class="mx-auto flex h-[68px] max-w-[1200px] items-center gap-6 px-5 sm:px-8">
+    <a href="/" class="flex items-center gap-2.5" aria-label="Norware, inicio">
+      <span
+        class="grid h-8 w-8 place-items-center rounded-lg bg-order font-display text-[16px] font-bold text-paper"
+        aria-hidden="true">N</span
+      >
+      <span class="font-display text-[20px] font-semibold tracking-[-0.02em] text-ink">
+        {site.name}
+      </span>
+    </a>
+
+    <nav class="ml-auto hidden items-center gap-8 md:flex" aria-label="Secciones">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="text-[14.5px] font-medium text-ink-2 transition-colors hover:text-ink"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={whatsappDefault}
+      target="_blank"
+      rel="noopener"
+      class="btn btn-primary ml-auto !px-5 !py-2.5 !text-[14px] md:ml-0"
+    >
+      Hablemos
+    </a>
+
+    <button
+      id="nw-menu-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nw-sheet"
+      aria-label="Abrir menú"
+      class="-mr-2 grid h-10 w-10 place-items-center rounded-lg text-ink md:hidden"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Menú de celular -->
+<div id="nw-sheet" class="fixed inset-0 z-40 hidden bg-paper md:hidden">
+  <div class="flex h-full flex-col px-5 pb-10 pt-[88px]">
+    <ul>
+      {
+        links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class="nw-close block border-b border-line py-5 font-display text-[26px] font-semibold tracking-[-0.02em] text-ink"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href={whatsappDefault}
+      target="_blank"
+      rel="noopener"
+      class="nw-close btn btn-primary mt-8 w-full"
+    >
+      Hablemos por WhatsApp
+    </a>
+    <p class="mt-5 text-center text-[13.5px] text-ink-3">{site.tiempoRespuesta}</p>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById("nw-menu-btn");
+  const sheet = document.getElementById("nw-sheet");
+
+  function close() {
+    sheet?.classList.add("hidden");
+    btn?.setAttribute("aria-expanded", "false");
+    btn?.setAttribute("aria-label", "Abrir menú");
+    document.body.style.removeProperty("overflow");
+  }
+  function open() {
+    sheet?.classList.remove("hidden");
+    btn?.setAttribute("aria-expanded", "true");
+    btn?.setAttribute("aria-label", "Cerrar menú");
+    document.body.style.overflow = "hidden";
+  }
+
+  btn?.addEventListener("click", () => {
+    btn.getAttribute("aria-expanded") === "true" ? close() : open();
+  });
+  document
+    .querySelectorAll(".nw-close")
+    .forEach((el) => el.addEventListener("click", close));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
+</script>

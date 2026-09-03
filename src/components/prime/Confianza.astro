@@ -1,0 +1,126 @@
+---
+import { confianza, acentos } from "../../utils/prime";
+
+/**
+ * "Criterio en cada capa": texto + acordeón a la izquierda,
+ * tarjeta ilustrada a la derecha (archivos que entran al sistema).
+ */
+---
+
+<section id="confianza" class="mx-auto max-w-[1280px] px-5 pt-28 sm:px-10 sm:pt-32">
+  <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+    <!-- Columna de texto -->
+    <div class="flex flex-col">
+      <p class="reveal text-[14px] font-medium text-[#616161]">
+        <span class="braille" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        Criterio
+      </p>
+      <h2
+        class="reveal pf-display mt-4 max-w-[14ch] font-medium leading-[1.16] text-[#212121]"
+        style="font-size: clamp(2rem, 3.4vw, 3rem);"
+      >
+        Criterio, en cada capa.
+      </h2>
+      <p class="reveal mt-4 max-w-md text-[15.5px] leading-relaxed text-[#616161]">
+        Tres cosas sostienen todo lo que entregamos, y las decimos por adelantado.
+      </p>
+
+      <!-- Acordeón -->
+      <div class="mt-10 lg:mt-auto" id="pf-acordeon">
+        {
+          confianza.map((item, i) => (
+            <div
+              class:list={["pf-item border-l-2 pl-5 transition-colors", i === 0 ? "is-open" : ""]}
+              style={`border-color:${i === 0 ? acentos.inmobiliarias.chip : "rgba(0,0,0,0.08)"}`}
+            >
+              <button
+                type="button"
+                class="w-full py-3 text-left"
+                aria-expanded={i === 0 ? "true" : "false"}
+              >
+                <span class="text-[16.5px] font-semibold text-[#1A1814]">{item.titulo}</span>
+              </button>
+              <div class="pf-item-body grid" style={i === 0 ? "grid-template-rows:1fr" : "grid-template-rows:0fr"}>
+                <p class="overflow-hidden pb-3 pr-2 text-[14.5px] leading-relaxed text-[#616161]">
+                  {item.detalle}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Tarjeta ilustrada -->
+    <div class="reveal relative overflow-hidden rounded-2xl bg-white p-6 sm:p-10">
+      <div class="flex min-h-[420px] flex-col items-center justify-center gap-8 sm:min-h-[560px]">
+        <!-- Archivos que entran -->
+        <div class="flex flex-wrap justify-center gap-4">
+          <div class="relative rounded-xl border border-dashed border-black/[0.18] bg-white p-1.5">
+            <div class="flex items-center gap-2.5 rounded-lg bg-white px-4 py-3 shadow-[0_2px_10px_rgba(26,24,20,0.07)]">
+              <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[#1F7A6D]/10 text-[10px] font-bold text-[#1F7A6D]">X</span>
+              <span class="text-[13.5px] font-medium text-[#212121]">Pagos_2026.xlsx</span>
+            </div>
+            <span class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-md text-[9px] font-semibold text-white" style={`background:${acentos.inmobiliarias.chip}`}>IN</span>
+          </div>
+          <div class="relative rounded-xl border border-dashed border-black/[0.18] bg-white p-1.5">
+            <div class="flex items-center gap-2.5 rounded-lg bg-white px-4 py-3 shadow-[0_2px_10px_rgba(26,24,20,0.07)]">
+              <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[#C2410C]/10 text-[10px] font-bold text-[#C2410C]">PDF</span>
+              <span class="text-[13.5px] font-medium text-[#212121]">Ficha_Hilux.pdf</span>
+            </div>
+            <span class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-md text-[9px] font-semibold text-white" style={`background:${acentos.autoficha.chip}`}>AF</span>
+          </div>
+        </div>
+
+        <!-- Flecha hacia el sistema -->
+        <svg width="20" height="44" viewBox="0 0 20 44" fill="none" aria-hidden="true">
+          <path d="M10 0 v36 m0 0 l-6-6 m6 6 l6-6" stroke="#1A1814" stroke-opacity="0.3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+        <!-- El sistema responde con la fuente a la vista -->
+        <div class="w-full max-w-[400px] rounded-2xl bg-[#1A1814] p-5">
+          <p class="text-[13.5px] text-white/90">¿Quién no pagó este mes?</p>
+          <div class="mt-3 rounded-xl bg-white/[0.06] px-4 py-3">
+            <p class="text-[13.5px] leading-relaxed text-white">
+              Tres inquilinos, con recordatorio ya enviado.
+            </p>
+            <p class="mt-2 border-t border-white/[0.08] pt-2 text-[11.5px] text-white/55">
+              Fuente: Pagos_2026.xlsx · filas 12, 31 y 47
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Acordeón: uno abierto a la vez, borde de color en el activo.
+  const items = [...document.querySelectorAll<HTMLElement>("#pf-acordeon .pf-item")];
+  const ACENTO = "#1F7A6D";
+
+  items.forEach((item) => {
+    const btn = item.querySelector("button");
+    btn?.addEventListener("click", () => {
+      items.forEach((otro) => {
+        const abierto = otro === item;
+        otro.classList.toggle("is-open", abierto);
+        otro.style.borderColor = abierto ? ACENTO : "rgba(0,0,0,0.08)";
+        otro.querySelector("button")?.setAttribute("aria-expanded", String(abierto));
+        const body = otro.querySelector<HTMLElement>(".pf-item-body");
+        if (body) body.style.gridTemplateRows = abierto ? "1fr" : "0fr";
+      });
+    });
+  });
+</script>
+
+<style>
+  .pf-item-body {
+    transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pf-item-body {
+      transition: none;
+    }
+  }
+</style>

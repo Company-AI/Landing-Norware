@@ -1,5 +1,6 @@
 ---
 import { site } from "../utils/site";
+import { estudio } from "../utils/estudio";
 
 export interface Props {
   title: string;
@@ -9,7 +10,11 @@ export interface Props {
 const { title, description = site.description } = Astro.props;
 const fullTitle = `${site.name} — ${title}`;
 
-// Datos estructurados: negocio local orientado a Río Cuarto y zona.
+// Datos estructurados: un estudio de software con base local.
+//
+// `foundingDate` sale de `estudio.desde` y solo se emite si ese año está
+// cargado. Un dato estructurado inventado es peor que uno ausente: acá se
+// declara lo mismo que dice la página, ni más.
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -17,17 +22,22 @@ const jsonLd = JSON.stringify({
   description: site.description,
   url: site.url,
   email: site.email,
+  ...(estudio.desde !== null ? { foundingDate: String(estudio.desde) } : {}),
   areaServed: {
     "@type": "City",
     name: "Río Cuarto",
     containedInPlace: { "@type": "State", name: "Córdoba, Argentina" },
   },
   knowsAbout: [
+    "Desarrollo de software a medida",
+    "Sistemas de gestión para pymes",
+    "Sistemas multi-empresa con roles y permisos",
+    "Integraciones NFC y QR",
+    "Integración de pagos y notificaciones",
     "Software para inmobiliarias",
     "Sistema para talleres mecánicos y lubricentros",
     "Control de stock para comercios",
     "Ecommerce",
-    "Software a medida para pymes",
     "Automatización de procesos",
     "Inteligencia artificial aplicada",
   ],
@@ -42,7 +52,7 @@ const jsonLd = JSON.stringify({
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#05060A" />
+    <meta name="theme-color" content="#14100E" />
     <meta name="color-scheme" content="dark" />
 
     <meta property="og:title" content={fullTitle} />
@@ -68,8 +78,14 @@ const jsonLd = JSON.stringify({
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Dos familias, no cuatro. Se fueron Space Grotesk (geométrica, de
+      producto), JetBrains Mono (terminal) e Instrument Serif. Queda
+      Fraunces para los títulos —serif blanda, cálida, con pesos reales—
+      e Inter para todo lo demás.
+    -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
@@ -88,47 +104,47 @@ const jsonLd = JSON.stringify({
 
 <style is:global>
   /* ==========================================================
-     NORWARE V4 · OBSIDIAN BLUEPRINT
-     La arquitectura de la v2 (riel lateral, índice 01–10, retícula
-     de plano, secciones separadas por hairlines) dibujada con la
-     paleta y los materiales de la v1 (obsidiana, verde orden,
-     violeta profundidad, coral desorden).
+     NORWARE V6 · NEGRO CÁLIDO
 
-     La vuelta de tuerca: la extrusión sólida de la v2 acá es un
-     MARCO DE LUZ desplazado. La profundidad se dibuja con neón,
-     no con sombra.
+     La v4 era obsidiana azulada con neón violeta: retícula de
+     plano, marcos de luz, monoespaciada en 92 lugares, índice
+     01/10. Ese es el lenguaje de una herramienta para devs.
+
+     La v5 lo pasó a papel claro suponiendo que las referencias
+     eran claras. Mirándolas de verdad, no: thoughtbot es negro
+     amarronado y basement es negro puro.
+
+     La conclusión: lo oscuro nunca fue el problema, el problema
+     era el vocabulario. Así que el fondo vuelve a ser oscuro
+     —cálido, no azulado— y todo el vocabulario de terminal se
+     queda afuera: sin mono, sin neón, sin grilla, sin índice.
      ========================================================== */
 
   :root {
-    --void: #05060a;
-    --void-2: #070910;
-    --void-3: #0a0d15;
-    --panel: #0a0d14;
+    --paper: #14100e;
+    --paper-2: #1c1714;
+    --paper-3: #241d19;
 
-    --edge: rgba(255, 255, 255, 0.085);
-    --edge-hi: rgba(255, 255, 255, 0.2);
+    --line: rgba(240, 235, 231, 0.14);
+    --line-soft: rgba(240, 235, 231, 0.08);
+    --line-strong: rgba(240, 235, 231, 0.28);
 
-    --ink: #edf1f7;
-    --ink-2: #98a2b3;
-    --ink-3: #5d6675;
+    --ink: #f0ebe7;
+    --ink-2: #a79e97;
+    --ink-3: #8a817a;
 
-    --order: #9b5cff;
-    --depth: #4c6ef5;
-    --chaos: #ff6a45;
+    --order: #a883ff;
+    --order-wash: rgba(168, 131, 255, 0.13);
+    --depth: #7aa2ff;
+    --depth-wash: rgba(122, 162, 255, 0.13);
+    --chaos: #ff8a5c;
+    --chaos-wash: rgba(255, 138, 92, 0.13);
 
     --rx: 0deg;
     --ry: 0deg;
     --tz: 0px;
     --mx: 50%;
     --my: 0%;
-
-    --rail: 0px;
-  }
-
-  @media (min-width: 1024px) {
-    :root {
-      --rail: 88px;
-    }
   }
 
   *,
@@ -141,7 +157,8 @@ const jsonLd = JSON.stringify({
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 40px;
+    /* Deja aire bajo el header fijo cuando se salta a un ancla. */
+    scroll-padding-top: 92px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -149,20 +166,15 @@ const jsonLd = JSON.stringify({
     min-height: 100vh;
     font-family: Inter, system-ui, sans-serif;
     color: var(--ink);
-    background-color: var(--void);
-    /* Retícula de plano, en verde y sobre obsidiana: el hilo que
-       recorre todas las secciones (idea de v2, color de v1). */
-    background-image:
-      linear-gradient(to right, rgba(155, 92, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(155, 92, 255, 0.035) 1px, transparent 1px);
-    background-size: 34px 34px;
-    letter-spacing: -0.011em;
-    padding-left: var(--rail);
+    /* Sin retícula de plano de fondo: era la firma más "blueprint". */
+    background-color: var(--paper);
+    letter-spacing: -0.006em;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background: rgba(155, 92, 255, 0.3);
-    color: #fff;
+    background: var(--order-wash);
+    color: var(--ink);
   }
 
   img,
@@ -177,130 +189,102 @@ const jsonLd = JSON.stringify({
   h3,
   h4,
   .font-display {
-    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-family: Fraunces, Georgia, serif;
     font-weight: 600;
+    font-variation-settings: "SOFT" 30, "WONK" 0;
   }
 
+  /* La palabra destacada del titular: misma familia, en itálica. */
   .accent {
-    font-family: "Instrument Serif", Georgia, serif;
     font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    font-variation-settings: "SOFT" 60, "WONK" 1;
   }
+
+  /* -------------------------------------------------- etiquetas */
+  /* Antes esto era JetBrains Mono y aparecía 92 veces: el sitio
+     entero sonaba a consola. Misma clase, otra voz. */
 
   .mono,
   .font-mono {
-    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-family: Inter, system-ui, sans-serif;
+    font-feature-settings: "cv05" 1;
   }
-
-  /* --------------------------------------------------- etiqueta */
 
   .tag {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 0.6875rem;
-    letter-spacing: 0.2em;
+    gap: 0.55rem;
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--order);
   }
   .tag::before {
     content: "";
-    width: 8px;
-    height: 8px;
-    background: var(--order);
-    box-shadow: 0 0 10px rgba(155, 92, 255, 0.9);
-    transform: rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
   }
   .tag--depth {
-    color: #9DB0FF;
-  }
-  .tag--depth::before {
-    background: #9DB0FF;
-    box-shadow: 0 0 10px rgba(76, 110, 245, 0.9);
+    color: var(--depth);
   }
   .tag--chaos {
     color: var(--chaos);
   }
-  .tag--chaos::before {
-    background: var(--chaos);
-    box-shadow: 0 0 10px rgba(255, 106, 69, 0.9);
-  }
 
   .index {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 0.6875rem;
-    letter-spacing: 0.2em;
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: var(--ink-3);
   }
 
-  /* Regla que se dibuja, con un punto de luz al final */
   .rule {
-    position: relative;
     height: 1px;
     width: 100%;
-    background: linear-gradient(90deg, rgba(155, 92, 255, 0.45), rgba(255, 255, 255, 0.06));
+    background: var(--line);
     transform-origin: left center;
   }
 
-  /* ------------------------------------------------------ blade */
-  /* La pieza única: cristal oscuro, cantos rectos y un marco de luz
-     desplazado por detrás. Es la extrusión de la v2 hecha de neón. */
+  /* ------------------------------------------------------ ficha */
+  /* Era `blade`: cristal oscuro con un marco de neón desplazado por
+     detrás. Ahora es una ficha de papel: fondo claro, borde fino y
+     una sombra baja. Se conserva el nombre de la clase. */
 
   .blade {
     position: relative;
-    border-radius: 6px;
-    border: 1px solid var(--edge);
-    background:
-      radial-gradient(120% 120% at var(--mx) var(--my), rgba(255, 255, 255, 0.06), transparent 58%),
-      linear-gradient(158deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.012) 46%, rgba(255, 255, 255, 0) 100%),
-      var(--panel);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 30px 60px -40px rgba(0, 0, 0, 0.95);
+    /* Esquinas bien blandas: es de lo más característico de thoughtbot. */
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    /* Sobre negro la elevación no se hace con sombra sino con una
+       superficie más clara que el fondo. */
+    background: var(--paper-2);
+    box-shadow: none;
     transform-style: preserve-3d;
     transition:
-      transform 0.5s cubic-bezier(0.16, 0.84, 0.28, 1),
-      border-color 0.4s ease;
-  }
-
-  .blade::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: 6px;
-    border: 1px solid var(--blade-glow, rgba(155, 92, 255, 0.3));
-    transform: translate(var(--blade-d, 10px), var(--blade-d, 10px));
-    transition:
-      transform 0.5s cubic-bezier(0.16, 0.84, 0.28, 1),
-      border-color 0.4s ease,
-      box-shadow 0.4s ease;
-    pointer-events: none;
+      transform 0.45s cubic-bezier(0.16, 0.84, 0.28, 1),
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
   .blade:hover {
-    border-color: var(--edge-hi);
-  }
-  .blade:hover::before {
-    transform: translate(calc(var(--blade-d, 10px) + 5px), calc(var(--blade-d, 10px) + 5px));
-    border-color: var(--blade-glow-hi, rgba(155, 92, 255, 0.6));
-    box-shadow: 0 0 26px -6px rgba(155, 92, 255, 0.35);
+    border-color: var(--line-strong);
+    background: var(--paper-3);
   }
 
+  /* Los acentos ya no son resplandor: son un filo de color arriba. */
   .blade--depth {
-    --blade-glow: rgba(76, 110, 245, 0.34);
-    --blade-glow-hi: rgba(76, 110, 245, 0.65);
-  }
-  .blade--depth:hover::before {
-    box-shadow: 0 0 26px -6px rgba(76, 110, 245, 0.4);
+    border-top: 2px solid var(--depth);
   }
   .blade--chaos {
-    --blade-glow: rgba(255, 106, 69, 0.3);
-    --blade-glow-hi: rgba(255, 106, 69, 0.6);
+    border-top: 2px solid var(--chaos);
   }
-  .blade--flat::before {
-    display: none;
+  .blade--flat {
+    background: transparent;
   }
 
   .blade[data-tilt] {
@@ -308,47 +292,20 @@ const jsonLd = JSON.stringify({
     will-change: transform;
   }
 
-  .layer-1 {
-    transform: translateZ(18px);
-  }
+  .layer-1,
   .layer-2 {
-    transform: translateZ(34px);
+    /* La profundidad 3D se fue con la estética de neón. */
+    transform: none;
   }
 
-  /* Marcas de esquina: el encuadre técnico de la v2 */
+  /* Las marcas de esquina eran encuadre técnico: fuera. */
   .tick {
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    background: var(--order);
-    box-shadow: 0 0 10px rgba(155, 92, 255, 0.8);
-    z-index: 2;
-  }
-  .tick--tl {
-    top: -4px;
-    left: -4px;
-  }
-  .tick--tr {
-    top: -4px;
-    right: -4px;
-  }
-  .tick--bl {
-    bottom: -4px;
-    left: -4px;
-  }
-  .tick--br {
-    bottom: -4px;
-    right: -4px;
+    display: none;
   }
 
-  /* ---------------------------------------------------- escenas */
-
-  .scene {
-    perspective: 1500px;
-    perspective-origin: 50% 45%;
-  }
+  .scene,
   .scene-near {
-    perspective: 900px;
+    perspective: 1600px;
   }
   .d3 {
     transform-style: preserve-3d;
@@ -361,13 +318,13 @@ const jsonLd = JSON.stringify({
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
+    gap: 0.55rem;
+    font-family: Inter, system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.9375rem;
     line-height: 1;
-    padding: 1.05rem 1.7rem;
-    border-radius: 6px;
+    padding: 1rem 1.6rem;
+    border-radius: 999px;
     white-space: nowrap;
     transition:
       transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1),
@@ -381,57 +338,50 @@ const jsonLd = JSON.stringify({
   }
 
   .btn-primary {
-    color: #ffffff;
-    background: linear-gradient(180deg, #B48CFF 0%, #8B4FEA 100%);
-    box-shadow:
-      0 5px 0 0 #5A2BA6,
-      0 0 30px -8px rgba(155, 92, 255, 0.7);
+    /* Texto oscuro sobre el violeta claro: 8:1, y se ve más caro
+       que blanco sobre violeta. */
+    color: #1a1208;
+    background: var(--order);
   }
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 7px 0 0 #5A2BA6,
-      0 0 44px -8px rgba(155, 92, 255, 0.85);
+    transform: translateY(-1px);
+    background: #bda0ff;
   }
   .btn-primary:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px 0 0 #5A2BA6;
+    transform: translateY(0);
   }
 
   .btn-ghost {
     color: var(--ink);
-    border: 1px solid var(--edge-hi);
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 5px 0 0 rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--line-strong);
+    background: transparent;
   }
   .btn-ghost:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(155, 92, 255, 0.45);
-    box-shadow: 0 7px 0 0 rgba(155, 92, 255, 0.14);
+    transform: translateY(-1px);
+    border-color: var(--ink);
+    background: var(--paper-2);
   }
   .btn-ghost:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px 0 0 rgba(255, 255, 255, 0.04);
+    transform: translateY(0);
   }
 
   .link-arrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-weight: 500;
-    color: var(--ink);
+    gap: 0.45rem;
+    font-family: Inter, system-ui, sans-serif;
+    font-weight: 600;
+    color: var(--order);
     transition: color 0.25s ease;
   }
   .link-arrow svg {
     transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
   .link-arrow:hover {
-    color: var(--order);
+    color: #c7aaff;
   }
   .link-arrow:hover svg {
-    transform: translateX(4px);
+    transform: translateX(3px);
   }
 
   /* ------------------------------------------------------ rubro */
@@ -455,8 +405,6 @@ const jsonLd = JSON.stringify({
     display: block;
   }
 
-  /* Fila colapsada de los rubros que NO están seleccionados: la del rubro
-     activo se esconde porque ya está desplegada arriba. */
   html[data-rubro="inmobiliarias"] [data-rubro-row="inmobiliarias"],
   html[data-rubro="talleres"] [data-rubro-row="talleres"],
   html[data-rubro="ecommerce"] [data-rubro-row="ecommerce"],
@@ -468,45 +416,55 @@ const jsonLd = JSON.stringify({
     transition:
       border-color 0.25s ease,
       background-color 0.25s ease,
-      color 0.25s ease,
-      transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+      color 0.25s ease;
   }
   [data-rubro-btn]:hover {
-    transform: translateY(-2px);
-    border-color: rgba(155, 92, 255, 0.45);
+    border-color: var(--line-strong);
   }
   [data-rubro-btn].is-on {
-    border-color: rgba(155, 92, 255, 0.75);
-    background: rgba(155, 92, 255, 0.12);
-    color: var(--ink);
-    box-shadow: 0 0 26px -8px rgba(155, 92, 255, 0.85);
+    border-color: var(--order);
+    background: var(--order-wash);
+    color: var(--order);
   }
 
-  /* Tarjeta de solución resaltada al llegar desde el selector */
   .is-target {
     animation: target-pulse 2.4s ease-out 1;
   }
   @keyframes target-pulse {
     0%,
     100% {
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 30px 60px -40px rgba(0, 0, 0, 0.95);
+      box-shadow: none;
     }
     18%,
     62% {
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 0 0 1px rgba(155, 92, 255, 0.7),
-        0 0 44px -6px rgba(155, 92, 255, 0.55);
+      box-shadow: 0 0 0 2px var(--order);
     }
+  }
+
+  /* ------------------------------------------------------- camino */
+  /* Los dos públicos de la página: el que viene a ordenar un negocio
+     y el que viene a construir un proyecto. Elegir camino solo cambia
+     el bloque del hero; ninguna sección se esconde. */
+
+  [data-via-panel] {
+    display: none;
+  }
+  [data-via-panel="ordenar"] {
+    display: block;
+  }
+  html[data-via] [data-via-panel] {
+    display: none;
+  }
+  html[data-via="ordenar"] [data-via-panel="ordenar"],
+  html[data-via="construir"] [data-via-panel="construir"] {
+    display: block;
   }
 
   /* ------------------------------------------- estados iniciales */
 
   html.js-motion [data-reveal] {
     opacity: 0;
-    transform: translate3d(0, 24px, -60px);
+    transform: translate3d(0, 16px, 0);
   }
 
   .skip-link {
@@ -515,9 +473,9 @@ const jsonLd = JSON.stringify({
     left: 1rem;
     z-index: 90;
     padding: 0.7rem 1.1rem;
-    border-radius: 6px;
+    border-radius: 999px;
     background: var(--order);
-    color: #ffffff;
+    color: #1a1208;
     font-weight: 600;
     transition: top 0.2s ease;
   }
@@ -539,21 +497,6 @@ const jsonLd = JSON.stringify({
     .blade[data-tilt] {
       transform: none !important;
     }
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #05060a;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #2A2150;
-    border: 2px solid #05060a;
-  }
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #2A2150 #05060a;
   }
 </style>
 

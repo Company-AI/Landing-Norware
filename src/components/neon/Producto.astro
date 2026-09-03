@@ -7,10 +7,10 @@ import Pantalla from "./Pantalla.astro";
 // MOCKUPS ILUSTRATIVOS — reemplazar por capturas reales del producto.
 ---
 
-<section id="producto" class="relative border-b border-white/[0.08] bg-void-2/70">
-  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+<section id="producto" class="relative border-b border-line bg-paper-2">
+  <div class="relative mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="01" tag="Así se ve">
+      <SectionHead tag="Así se ve">
         No te lo contamos. Te lo <span class="accent text-order">mostramos</span>
       </SectionHead>
 
@@ -37,13 +37,13 @@ import Pantalla from "./Pantalla.astro";
           >
             <table class="w-full text-left">
               <thead>
-                <tr class="mono border-b border-white/[0.07] text-[9.5px] uppercase tracking-[0.14em] text-ink-3">
+                <tr class="mono border-b border-line-soft text-[11px] uppercase tracking-[0.14em] text-ink-3">
                   <th class="px-4 py-2.5 font-normal">Propiedad</th>
                   <th class="px-4 py-2.5 font-normal">Tipo</th>
                   <th class="px-4 py-2.5 font-normal">Estado</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-white/[0.06]">
+              <tbody class="divide-y divide-line-soft">
                 <tr class="bg-order/[0.05]">
                   <td class="px-4 py-3.5">
                     <p class="text-[13px] font-medium text-ink">Sobremonte 480</p>
@@ -51,7 +51,7 @@ import Pantalla from "./Pantalla.astro";
                   </td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">Alquiler</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[9.5px] uppercase tracking-wider text-order">
+                    <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[11px] uppercase tracking-wider text-order">
                       Vence en 12 días
                     </span>
                   </td>
@@ -63,7 +63,7 @@ import Pantalla from "./Pantalla.astro";
                   </td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">Alquiler</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                    <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                       Al día
                     </span>
                   </td>
@@ -75,7 +75,7 @@ import Pantalla from "./Pantalla.astro";
                   </td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">Venta</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                    <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                       Con reserva
                     </span>
                   </td>
@@ -89,7 +89,7 @@ import Pantalla from "./Pantalla.astro";
             meta="Sobremonte 480"
             pie="Toda la historia del contrato en una pantalla: pagos, ajustes y avisos."
           >
-            <dl class="divide-y divide-white/[0.06]">
+            <dl class="divide-y divide-line-soft">
               <div class="flex items-center justify-between px-4 py-3">
                 <dt class="text-[12px] text-ink-3">Propietario</dt>
                 <dd class="text-[12.5px] font-medium text-ink">R. Sosa</dd>
@@ -107,8 +107,8 @@ import Pantalla from "./Pantalla.astro";
                 <dd class="text-[12.5px] font-medium text-ink">14 de 14</dd>
               </div>
             </dl>
-            <div class="border-t border-white/[0.08] px-4 py-3.5">
-              <span class="mono inline-flex items-center gap-2 rounded border border-order/40 bg-order/10 px-2.5 py-1.5 text-[9.5px] uppercase tracking-wider text-order">
+            <div class="border-t border-line px-4 py-3.5">
+              <span class="mono inline-flex items-center gap-2 rounded border border-order/40 bg-order/10 px-2.5 py-1.5 text-[11px] uppercase tracking-wider text-order">
                 Enviar aviso por WhatsApp
               </span>
             </div>
@@ -124,14 +124,14 @@ import Pantalla from "./Pantalla.astro";
             meta="martes 12"
             pie="Así ves el día completo del taller sin abrir el cuaderno ni WhatsApp."
           >
-            <ul class="divide-y divide-white/[0.06]">
+            <ul class="divide-y divide-line-soft">
               <li class="flex items-center gap-4 px-4 py-3.5">
                 <span class="mono w-12 shrink-0 text-[12px] text-ink-2">09:00</span>
                 <div class="flex-1">
                   <p class="text-[13px] font-medium text-ink">Ford Ranger · AB 123 CD</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Service 20.000 km</p>
                 </div>
-                <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                   Listo
                 </span>
               </li>
@@ -141,7 +141,7 @@ import Pantalla from "./Pantalla.astro";
                   <p class="text-[13px] font-medium text-ink">VW Amarok · AD 908 KL</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Cambio de aceite y filtro</p>
                 </div>
-                <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                   En taller
                 </span>
               </li>
@@ -151,7 +151,7 @@ import Pantalla from "./Pantalla.astro";
                   <p class="text-[13px] font-medium text-ink">Toyota Hilux · AE 441 PZ</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Service 10.000 km · M. Ferreyra</p>
                 </div>
-                <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[9.5px] uppercase tracking-wider text-order">
+                <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[11px] uppercase tracking-wider text-order">
                   Próximo
                 </span>
               </li>
@@ -163,23 +163,23 @@ import Pantalla from "./Pantalla.astro";
             meta="Hilux AE 441 PZ"
             pie="Cada auto con su historia: qué se le hizo, cuándo y qué le toca."
           >
-            <ul class="divide-y divide-white/[0.06]">
+            <ul class="divide-y divide-line-soft">
               <li class="px-4 py-3">
                 <div class="flex items-center justify-between">
                   <p class="text-[12.5px] font-medium text-ink">Service 5.000 km</p>
-                  <span class="mono text-[10.5px] text-ink-3">14/03</span>
+                  <span class="mono text-[11px] text-ink-3">14/03</span>
                 </div>
                 <p class="mt-0.5 text-[11.5px] text-ink-3">Aceite 15W40 · filtro W68</p>
               </li>
               <li class="px-4 py-3">
                 <div class="flex items-center justify-between">
                   <p class="text-[12.5px] font-medium text-ink">Cambio de cubiertas</p>
-                  <span class="mono text-[10.5px] text-ink-3">02/01</span>
+                  <span class="mono text-[11px] text-ink-3">02/01</span>
                 </div>
                 <p class="mt-0.5 text-[11.5px] text-ink-3">Delanteras · alineación</p>
               </li>
             </ul>
-            <div class="border-t border-white/[0.08] bg-order/[0.05] px-4 py-3.5">
+            <div class="border-t border-line bg-order/[0.05] px-4 py-3.5">
               <p class="text-[12.5px] font-medium text-order">Próximo service: 10.000 km</p>
               <p class="mt-0.5 text-[11.5px] text-ink-3">
                 Recordatorio automático al cliente
@@ -199,18 +199,18 @@ import Pantalla from "./Pantalla.astro";
           >
             <table class="w-full text-left">
               <thead>
-                <tr class="mono border-b border-white/[0.07] text-[9.5px] uppercase tracking-[0.14em] text-ink-3">
+                <tr class="mono border-b border-line-soft text-[11px] uppercase tracking-[0.14em] text-ink-3">
                   <th class="px-4 py-2.5 font-normal">Producto</th>
                   <th class="px-4 py-2.5 font-normal">Cantidad</th>
                   <th class="px-4 py-2.5 font-normal">Estado</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-white/[0.06]">
+              <tbody class="divide-y divide-line-soft">
                 <tr class="bg-chaos/[0.06]">
                   <td class="px-4 py-3.5 text-[13px] font-medium text-ink">Bujía NGK BPR6</td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">0</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-chaos/40 bg-chaos/10 px-2 py-1 text-[9.5px] uppercase tracking-wider text-chaos">
+                    <span class="mono rounded border border-chaos/40 bg-chaos/10 px-2 py-1 text-[11px] uppercase tracking-wider text-chaos">
                       Sin stock
                     </span>
                   </td>
@@ -219,7 +219,7 @@ import Pantalla from "./Pantalla.astro";
                   <td class="px-4 py-3.5 text-[13px] font-medium text-ink">Filtro de aceite W68</td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">4</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[9.5px] uppercase tracking-wider text-order">
+                    <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[11px] uppercase tracking-wider text-order">
                       Reponer
                     </span>
                   </td>
@@ -228,7 +228,7 @@ import Pantalla from "./Pantalla.astro";
                   <td class="px-4 py-3.5 text-[13px] font-medium text-ink">Aceite 15W40 · 4L</td>
                   <td class="px-4 py-3.5 text-[12.5px] text-ink-2">22</td>
                   <td class="px-4 py-3.5">
-                    <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                    <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                       Ok
                     </span>
                   </td>
@@ -242,13 +242,13 @@ import Pantalla from "./Pantalla.astro";
             meta="hoy"
             pie="El pedido descuenta stock solo. No se carga dos veces en ningún lado."
           >
-            <ul class="divide-y divide-white/[0.06]">
+            <ul class="divide-y divide-line-soft">
               <li class="flex items-center justify-between gap-3 px-4 py-3.5">
                 <div>
                   <p class="text-[13px] font-medium text-ink">#1042 · L. Peralta</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">2 productos · pagado</p>
                 </div>
-                <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[9.5px] uppercase tracking-wider text-order">
+                <span class="mono rounded border border-order/40 bg-order/10 px-2 py-1 text-[11px] uppercase tracking-wider text-order">
                   Preparar
                 </span>
               </li>
@@ -257,21 +257,21 @@ import Pantalla from "./Pantalla.astro";
                   <p class="text-[13px] font-medium text-ink">#1041 · C. Vega</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">1 producto · envío</p>
                 </div>
-                <span class="mono rounded border border-white/10 bg-white/[0.05] px-2 py-1 text-[9.5px] uppercase tracking-wider text-ink-2">
+                <span class="mono rounded border border-white/10 bg-paper-2 px-2 py-1 text-[11px] uppercase tracking-wider text-ink-2">
                   Enviado
                 </span>
               </li>
             </ul>
-            <div class="grid grid-cols-2 border-t border-white/[0.08]">
-              <div class="border-r border-white/[0.06] px-4 py-3.5 text-center">
+            <div class="grid grid-cols-2 border-t border-line">
+              <div class="border-r border-line-soft px-4 py-3.5 text-center">
                 <p class="font-display text-[19px] font-semibold text-ink">18</p>
-                <p class="mono mt-0.5 text-[9px] uppercase tracking-[0.1em] text-ink-3">
+                <p class="mono mt-0.5 text-[11px] uppercase tracking-[0.1em] text-ink-3">
                   Pedidos del mes
                 </p>
               </div>
               <div class="px-4 py-3.5 text-center">
                 <p class="font-display text-[19px] font-semibold text-order">3</p>
-                <p class="mono mt-0.5 text-[9px] uppercase tracking-[0.1em] text-ink-3">
+                <p class="mono mt-0.5 text-[11px] uppercase tracking-[0.1em] text-ink-3">
                   Por preparar
                 </p>
               </div>
@@ -288,36 +288,36 @@ import Pantalla from "./Pantalla.astro";
             meta="a medida"
             pie="Si tu proceso no entra en una caja, la herramienta se arma alrededor de él."
           >
-            <ol class="divide-y divide-white/[0.06]">
+            <ol class="divide-y divide-line-soft">
               <li class="flex items-center gap-4 px-4 py-3.5">
-                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-white/15 text-[10.5px] text-ink-2">
+                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-white/15 text-[11px] text-ink-2">
                   01
                 </span>
                 <div class="flex-1">
                   <p class="text-[13px] font-medium text-ink">Pedido del cliente</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Responsable: mostrador</p>
                 </div>
-                <span class="mono text-[10px] text-ink-3">2 hoy</span>
+                <span class="mono text-[11px] text-ink-3">2 hoy</span>
               </li>
               <li class="flex items-center gap-4 bg-order/[0.05] px-4 py-3.5">
-                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-order/40 bg-order/10 text-[10.5px] text-order">
+                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-order/40 bg-order/10 text-[11px] text-order">
                   02
                 </span>
                 <div class="flex-1">
                   <p class="text-[13px] font-medium text-ink">Presupuesto y aprobación</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Responsable: administración</p>
                 </div>
-                <span class="mono text-[10px] text-order">1 trabada</span>
+                <span class="mono text-[11px] text-order">1 trabada</span>
               </li>
               <li class="flex items-center gap-4 px-4 py-3.5">
-                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-white/15 text-[10.5px] text-ink-2">
+                <span class="mono flex h-7 w-7 shrink-0 items-center justify-center rounded border border-white/15 text-[11px] text-ink-2">
                   03
                 </span>
                 <div class="flex-1">
                   <p class="text-[13px] font-medium text-ink">Entrega y facturación</p>
                   <p class="mt-0.5 text-[11.5px] text-ink-3">Responsable: depósito</p>
                 </div>
-                <span class="mono text-[10px] text-ink-3">4 hoy</span>
+                <span class="mono text-[11px] text-ink-3">4 hoy</span>
               </li>
             </ol>
           </Pantalla>
@@ -327,7 +327,7 @@ import Pantalla from "./Pantalla.astro";
             meta="alertas"
             pie="El sistema te avisa dónde se frena el trabajo, sin que tengas que buscarlo."
           >
-            <ul class="divide-y divide-white/[0.06]">
+            <ul class="divide-y divide-line-soft">
               <li class="px-4 py-3.5">
                 <p class="text-[12.5px] font-medium text-ink">Presupuesto sin respuesta</p>
                 <p class="mt-0.5 text-[11.5px] text-ink-3">Hace 6 días · cliente C. Vega</p>
@@ -337,8 +337,8 @@ import Pantalla from "./Pantalla.astro";
                 <p class="mt-0.5 text-[11.5px] text-ink-3">Control de calidad · lote 214</p>
               </li>
             </ul>
-            <div class="border-t border-white/[0.08] px-4 py-3.5">
-              <p class="mono text-[10px] uppercase tracking-[0.14em] text-ink-3">
+            <div class="border-t border-line px-4 py-3.5">
+              <p class="mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
                 Nada depende de que alguien se acuerde
               </p>
             </div>

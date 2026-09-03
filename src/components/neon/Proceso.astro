@@ -5,46 +5,38 @@ const pasos = [
   {
     titulo: "Entendemos tu negocio",
     texto:
-      "Relevamos cómo trabajás hoy, qué herramientas usás, dónde se pierde tiempo y qué información necesitás controlar mejor.",
+      "Cómo trabajás hoy y dónde se pierde el tiempo.",
   },
   {
     titulo: "Detectamos procesos desordenados",
     texto:
-      "Identificamos tareas repetidas, información dispersa, puntos de carga manual y oportunidades de mejora.",
+      "Qué se repite, qué se carga dos veces, qué se escapa.",
   },
   {
     titulo: "Proponemos una solución concreta",
     texto:
-      "Puede ser un sistema existente de Norware, una adaptación, una automatización, IA o un desarrollo a medida.",
+      "Te la mostramos antes de escribir una línea.",
   },
   {
     titulo: "Implementamos y acompañamos",
     texto:
-      "No solo entregamos el sistema. Te ayudamos a ponerlo en marcha y acompañamos al equipo para que realmente lo use.",
+      "Con tu equipo adentro, hasta que lo usan.",
   },
   {
     titulo: "Mejoramos con uso real",
     texto:
-      "Medimos, ajustamos y mejoramos según lo que pasa en la operación diaria.",
+      "Con lo que pasa en el mostrador, no en una reunión.",
   },
 ];
 ---
 
-<section id="proceso" class="relative border-b border-white/[0.08]">
-  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="06" tag="Metodología">
+<section id="proceso" class="relative border-b border-line">
+  <div class="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+    <div>
+      <SectionHead tag="Metodología">
         Cómo <span class="accent text-order">trabajamos</span>
       </SectionHead>
 
-      <p
-        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
-        data-reveal
-        data-reveal-delay="0.08"
-      >
-        Primero entendemos cómo trabajás. Después diseñamos la herramienta
-        justa.
-      </p>
     </div>
 
     <div class="scene relative mt-16">
@@ -53,18 +45,18 @@ const pasos = [
         class="absolute left-0 right-0 top-[68px] hidden h-px origin-left scale-x-0 bg-gradient-to-r from-order/70 via-order/25 to-transparent lg:block"
         aria-hidden="true"></span>
 
-      <ol class="grid border-l border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
+      <ol class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-5">
         {
           pasos.map((paso, i) => (
-            <li class="path-node paso relative border-b border-r border-white/[0.08] px-5 py-8 sm:px-6">
+            <li class="path-node paso relative border-b border-r border-line px-5 py-8 sm:px-6">
               <span
                 class:list={[
                   "mono relative z-10 flex h-10 w-10 items-center justify-center rounded border text-[12px]",
                   i === pasos.length - 1
                     ? "border-order/50 bg-order/15 text-order"
-                    : "border-white/15 bg-void text-ink-2",
+                    : "border-white/15 bg-paper text-ink-2",
                 ]}
-                style={i === pasos.length - 1 ? "box-shadow:0 0 24px -6px rgba(155,92,255,.8)" : ""}
+                style={i === pasos.length - 1 ? "" : ""}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -85,12 +77,11 @@ const pasos = [
          donde realmente pesa. -->
     <div
       id="cercania"
-      class="mt-14 flex flex-col gap-6 border-t border-white/[0.08] pt-10 lg:flex-row lg:items-center lg:gap-10"
+      class="mt-14 flex flex-col gap-6 border-t border-line pt-10 lg:flex-row lg:items-center lg:gap-10"
       data-reveal
     >
       <span
         class="flex h-12 w-12 shrink-0 items-center justify-center rounded border border-order/35 bg-order/[0.08]"
-        style="box-shadow:0 0 30px -8px rgba(155,92,255,.8)"
         aria-hidden="true"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="text-order">
@@ -118,7 +109,7 @@ const pasos = [
     transition: background-color 0.35s ease;
   }
   .paso:hover {
-    background: rgba(155, 92, 255, 0.035);
+    background: var(--order-wash);
   }
   .paso::after {
     content: "";
@@ -128,7 +119,6 @@ const pasos = [
     height: 1px;
     width: 0;
     background: var(--order);
-    box-shadow: 0 0 12px rgba(155, 92, 255, 0.9);
     transition: width 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
   .paso:hover::after {

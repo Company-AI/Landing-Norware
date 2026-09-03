@@ -84,22 +84,13 @@ const soluciones = [
 ];
 ---
 
-<section id="soluciones" class="relative border-b border-white/[0.08]">
-  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="03" tag="Qué ofrecemos">
+<section id="soluciones" class="relative border-b border-line">
+  <div class="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+    <div>
+      <SectionHead tag="Qué ofrecemos">
         Soluciones para negocios que necesitan más <span class="accent text-order">orden</span> y control
       </SectionHead>
 
-      <p
-        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
-        data-reveal
-        data-reveal-delay="0.08"
-      >
-        Si tu negocio hoy depende de planillas, papeles o mensajes, hay algo
-        para ordenar. El rubro solo define qué tan armado está el punto de
-        partida.
-      </p>
     </div>
 
     <!-- La tarjeta del rubro elegido, desplegada -->
@@ -118,16 +109,16 @@ const soluciones = [
               data-tilt-max="4"
               data-tilt-lift="12"
             >
-              <div class="flex items-center justify-between gap-4 border-b border-white/[0.07] pb-5">
+              <div class="flex items-center justify-between gap-4 border-b border-line-soft pb-5">
                 <span
                   class:list={[
-                    "mono text-[10px] uppercase tracking-[0.16em]",
-                    sol.tone === "depth" ? "text-[#9DB0FF]" : "text-order",
+                    "mono text-[11px] uppercase tracking-[0.16em]",
+                    sol.tone === "depth" ? "text-depth" : "text-order",
                   ]}
                 >
                   {sol.nombre}
                 </span>
-                <span class="mono text-[10px] tracking-[0.16em] text-ink-3">
+                <span class="mono text-[11px] tracking-[0.16em] text-ink-3">
                   Tu rubro
                 </span>
               </div>
@@ -141,7 +132,7 @@ const soluciones = [
                     {sol.descripcion}
                   </p>
 
-                  <p class="mt-6 border-t border-white/[0.07] pt-5 text-[14.5px] font-medium leading-relaxed text-ink">
+                  <p class="mt-6 border-t border-line-soft pt-5 text-[14.5px] font-medium leading-relaxed text-ink">
                     {sol.resultado}
                   </p>
 
@@ -159,8 +150,8 @@ const soluciones = [
                   </a>
                 </div>
 
-                <ul class="layer-1 mt-6 grid gap-2.5 self-start border-l border-white/[0.07] pl-6 lg:mt-6">
-                  <li class="mono mb-1 text-[9.5px] uppercase tracking-[0.18em] text-ink-3">
+                <ul class="layer-1 mt-6 grid gap-2.5 self-start border-l border-line-soft pl-6 lg:mt-6">
+                  <li class="mono mb-1 text-[11px] uppercase tracking-[0.18em] text-ink-3">
                     Resuelve
                   </li>
                   {sol.dolores.map((dolor) => (
@@ -186,20 +177,20 @@ const soluciones = [
 
     <!-- Los otros rubros, a un clic -->
     <div class="mt-10" data-reveal>
-      <p class="mono mb-4 text-[10px] uppercase tracking-[0.2em] text-ink-3">
+      <p class="mono mb-4 text-[11px] uppercase tracking-[0.2em] text-ink-3">
         ¿Tenés otro rubro?
       </p>
-      <ul class="grid border-t border-white/[0.08] sm:grid-cols-3">
+      <ul class="grid border-t border-line sm:grid-cols-3">
         {
           soluciones.map((sol) => (
             <li data-rubro-row={sol.id}>
               <button
                 type="button"
                 data-rubro-btn={sol.id}
-                class="fila flex w-full items-center gap-4 border-b border-white/[0.08] px-1 py-5 text-left sm:border-r sm:px-5"
+                class="fila flex w-full items-center gap-4 border-b border-line px-1 py-5 text-left sm:border-r sm:px-5"
               >
                 <span class="flex-1">
-                  <span class="mono block text-[9.5px] uppercase tracking-[0.16em] text-ink-3">
+                  <span class="mono block text-[11px] uppercase tracking-[0.16em] text-ink-3">
                     {sol.nombre}
                   </span>
                   <span class="mt-1.5 block font-display text-[14.5px] font-medium leading-snug text-ink">
@@ -224,7 +215,7 @@ const soluciones = [
     transition: background-color 0.3s ease;
   }
   .fila:hover {
-    background: rgba(155, 92, 255, 0.05);
+    background: var(--order-wash);
   }
   .fila .flecha {
     transition:
@@ -238,7 +229,7 @@ const soluciones = [
   /* La fila del rubro activo no se muestra, así que el borde derecho
      de la última visible no debe quedar colgando. */
   .fila {
-    border-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--line);
   }
 </style>
 

@@ -1,0 +1,57 @@
+---
+import { whatsappLink, site } from "../../utils/site";
+
+const ctaDiagnostico = whatsappLink(
+  "Hola Norware, quiero hacer el diagnóstico gratuito de mi negocio."
+);
+---
+
+<!-- Cierre: tarjeta oscura con malla de color difusa y CTA central -->
+<section id="contacto" class="mx-auto max-w-[1280px] px-5 pt-28 sm:px-10 sm:pt-32">
+  <div class="relative overflow-hidden rounded-3xl bg-[#0C0B0A] px-6 py-20 sm:py-24">
+    <!-- Malla difusa -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div
+        class="pf-mesh-a absolute -left-[10%] top-[10%] h-[70%] w-[55%] rounded-full opacity-70 blur-[90px]"
+        style="background: radial-gradient(closest-side, rgba(45,212,168,0.55), transparent 70%);"
+      >
+      </div>
+      <div
+        class="pf-mesh-b absolute -right-[8%] bottom-[0%] h-[80%] w-[50%] rounded-full opacity-60 blur-[90px]"
+        style="background: radial-gradient(closest-side, rgba(217,119,66,0.5), transparent 70%);"
+      >
+      </div>
+    </div>
+
+    <div class="relative mx-auto max-w-2xl text-center">
+      <h2
+        class="reveal pf-display font-medium leading-[1.12] text-white"
+        style="font-size: clamp(2.2rem, 4.4vw, 3.6rem);"
+      >
+        Contanos cómo trabajás.
+        <br />
+        Te decimos qué ordenar primero.
+      </h2>
+      <p class="reveal mx-auto mt-5 max-w-md text-[15.5px] leading-relaxed text-white/70">
+        Traé un problema real de tu negocio. El diagnóstico es gratis y sin compromiso.
+      </p>
+      <div class="reveal mt-9 flex flex-col items-center justify-center gap-2.5 sm:flex-row">
+        <a
+          href={ctaDiagnostico}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center rounded-full bg-white px-6 py-3 text-[16px] font-medium text-[#211E1C] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+        >
+          Hacer diagnóstico
+        </a>
+        <a
+          href={`mailto:${site.email}`}
+          class="inline-flex items-center rounded-full bg-white/15 px-6 py-3 text-[16px] font-medium text-white backdrop-blur-md transition-colors hover:bg-white/25"
+        >
+          Escribir por mail
+        </a>
+      </div>
+      <p class="reveal mt-5 text-[13px] text-white/60">{site.tiempoRespuesta}.</p>
+    </div>
+  </div>
+</section>

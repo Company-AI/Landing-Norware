@@ -1,0 +1,26 @@
+---
+/**
+ * Isotipo Norware: la imagen REAL de la marca, sin modificar
+ * (blanco sobre degradado violeta), con esquinas redondeadas por CSS.
+ *
+ * Fuente: foto de perfil de @norwarestudio (100x100). Alcanza para
+ * navbar, chips y favicon. Si aparece una versión en más resolución
+ * (o el SVG original), reemplazar `public/images/logo.jpg` y
+ * `public/favicon.png` manteniendo los nombres: se actualiza solo.
+ */
+export interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<img
+  src="/images/logo.jpg"
+  alt=""
+  aria-hidden="true"
+  class:list={["rounded-[24%] object-cover", className]}
+  width="100"
+  height="100"
+  loading="eager"
+  decoding="async"
+/>

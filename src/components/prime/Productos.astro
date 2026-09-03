@@ -1,0 +1,233 @@
+---
+import { productosHome, acentos } from "../../utils/prime";
+
+/**
+ * Tarjetas de producto: cabecera clara con chip + nombre, cuerpo
+ * oscuro TEÑIDO con el color del producto y una mini-interfaz
+ * alusiva (mock, con datos de ejemplo), pie con título y descripción.
+ * Grilla 2x2 en desktop.
+ */
+
+// Alturas del gráfico de barras del dashboard inmobiliario (mock)
+const barras = [42, 65, 34, 78, 55, 88, 48, 70];
+---
+
+<section id="productos" class="mx-auto max-w-[1280px] px-5 pt-28 sm:px-10 sm:pt-32">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="reveal text-[14px] font-medium text-[#616161]">
+      <span class="braille" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      Un estudio. Productos distintos.
+    </p>
+    <h2
+      class="reveal pf-display mt-4 font-medium leading-[1.16] text-[#212121]"
+      style="font-size: clamp(2rem, 3.4vw, 3rem);"
+    >
+      Lo que construimos.
+    </h2>
+    <p class="reveal mx-auto mt-4 max-w-lg text-[16px] leading-relaxed text-[#616161]">
+      Cuatro productos propios, cada uno con su rubro y su lenguaje.
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-5 md:grid-cols-2">
+    {
+      productosHome.map((p) => (
+        <article class="reveal group flex flex-col overflow-hidden rounded-2xl bg-black/[0.04] p-0.5 transition-transform duration-300 hover:-translate-y-1">
+          {/* Cabecera */}
+          <div class="flex items-center justify-between gap-2.5 px-5 py-4">
+            <span class="flex items-center gap-2.5">
+              <span
+                class="flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-semibold text-white"
+                style={`background:${acentos[p.color].chip}`}
+              >
+                {p.chip}
+              </span>
+              <span class="text-[15.5px] font-medium text-[#1A1814]">{p.nombre}</span>
+            </span>
+            {p.url && (
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-1 text-[13px] font-medium transition-opacity hover:opacity-70"
+                style={`color:${acentos[p.color].texto}`}
+              >
+                {p.url.replace("https://", "")}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17 17 7" />
+                  <path d="M9 7h8v8" />
+                </svg>
+              </a>
+            )}
+          </div>
+
+          {/* Cuerpo: mock alusivo, teñido con el color del producto */}
+          <div
+            class="relative mx-0.5 flex min-h-[300px] items-center justify-center overflow-hidden rounded-xl px-5 py-8"
+            style={`background: radial-gradient(ellipse at 80% -20%, ${acentos[p.color].chip}55, transparent 60%), radial-gradient(ellipse at 0% 110%, ${acentos[p.color].chip}33, transparent 55%), #14110E;`}
+          >
+            {p.id === "inmobiliarias" && (
+              /* Dashboard de agencia (mock) */
+              <div class="w-full max-w-[360px] overflow-hidden rounded-xl border border-white/[0.1] bg-[#1A1814]/90 shadow-2xl shadow-black/40 backdrop-blur transition-transform duration-500 group-hover:-translate-y-1">
+                <div class="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5">
+                  <span class="text-[12px] font-medium text-white/80">Panel · Marzo</span>
+                  <span class="flex gap-1" aria-hidden="true">
+                    <i class="h-2 w-2 rounded-full bg-white/15" />
+                    <i class="h-2 w-2 rounded-full bg-white/15" />
+                    <i class="h-2 w-2 rounded-full bg-white/15" />
+                  </span>
+                </div>
+                <div class="p-4">
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="rounded-lg bg-white/[0.05] px-2.5 py-2 text-center">
+                      <p class="pf-display text-[16px] font-medium text-white">96</p>
+                      <p class="text-[10px] text-white/65">Propiedades</p>
+                    </div>
+                    <div class="rounded-lg bg-white/[0.05] px-2.5 py-2 text-center">
+                      <p class="pf-display text-[16px] font-medium" style={`color:#4ADEBD`}>98%</p>
+                      <p class="text-[10px] text-white/65">Cobrado</p>
+                    </div>
+                    <div class="rounded-lg bg-white/[0.05] px-2.5 py-2 text-center">
+                      <p class="pf-display text-[16px] font-medium text-white">14</p>
+                      <p class="text-[10px] text-white/65">Vencen</p>
+                    </div>
+                  </div>
+                  {/* Cobranza por semana (barras mock) */}
+                  <div class="mt-3 rounded-lg bg-white/[0.05] px-3 pb-2.5 pt-3">
+                    <p class="text-[10.5px] text-white/65">Cobranza por semana</p>
+                    <div class="mt-2 flex h-[52px] items-end gap-1.5">
+                      {barras.map((h, i) => (
+                        <span
+                          class="flex-1 rounded-sm"
+                          style={`height:${h}%; background:${i === barras.length - 2 ? "#4ADEBD" : "rgba(255,255,255,0.28)"}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div class="mt-3 flex items-center justify-between rounded-lg bg-white/[0.05] px-3 py-2.5">
+                    <span class="text-[11.5px] text-white/80">Alquiler · Sobremonte 480</span>
+                    <span class="rounded px-1.5 py-0.5 text-[9.5px] font-medium text-[#062E26]" style="background:#4ADEBD">Al día</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {p.id === "autoficha" && (
+              /* Ficha del vehículo con medidor de service (mock) */
+              <div class="w-full max-w-[360px] overflow-hidden rounded-xl border border-white/[0.1] bg-[#1A1814]/90 shadow-2xl shadow-black/40 backdrop-blur transition-transform duration-500 group-hover:-translate-y-1">
+                <div class="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5">
+                  <span class="text-[12px] font-medium text-white/80">Toyota Hilux · AB 412 CD</span>
+                  <span class="rounded px-1.5 py-0.5 text-[9.5px] font-medium text-white" style={`background:${acentos.autoficha.chip}`}>En taller</span>
+                </div>
+                <div class="grid grid-cols-[auto_1fr] gap-4 p-4">
+                  {/* Medidor: km hasta el próximo service */}
+                  <div class="flex flex-col items-center justify-center">
+                    <svg width="92" height="58" viewBox="0 0 92 58" aria-hidden="true">
+                      <path d="M8 52 A 38 38 0 0 1 84 52" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="9" stroke-linecap="round" />
+                      <path d="M8 52 A 38 38 0 0 1 68 21" fill="none" stroke="#FB923C" stroke-width="9" stroke-linecap="round" />
+                    </svg>
+                    <p class="pf-display -mt-4 text-[17px] font-medium text-white">8.200</p>
+                    <p class="text-[9.5px] text-white/65">de 10.000 km</p>
+                  </div>
+                  {/* Historial corto */}
+                  <div class="space-y-1.5 self-center">
+                    <p class="flex justify-between gap-3 text-[11px] text-white/75"><span>Service 10.000 km</span><span class="text-white/40">mar</span></p>
+                    <p class="flex justify-between gap-3 text-[11px] text-white/75"><span>Cambio de embrague</span><span class="text-white/40">nov</span></p>
+                    <p class="flex justify-between gap-3 text-[11px] text-white/75"><span>Diagnóstico de caja</span><span class="text-white/40">jun</span></p>
+                  </div>
+                </div>
+                <div class="mx-4 mb-4 flex items-center justify-between rounded-lg bg-white/[0.05] px-3 py-2.5">
+                  <span class="text-[11.5px] text-white/80">Recordatorio al cliente</span>
+                  <span class="text-[11px] font-medium" style="color:#FB923C">Programado</span>
+                </div>
+              </div>
+            )}
+
+            {p.id === "tap" && (
+              /* Tarjeta de sellos NFC (mock) */
+              <div class="w-full max-w-[300px] transition-transform duration-500 group-hover:-translate-y-1">
+                <div class="overflow-hidden rounded-xl border border-white/[0.1] bg-[#1A1814]/90 shadow-2xl shadow-black/40 backdrop-blur">
+                  <div class="flex items-center justify-center gap-2 border-b border-white/[0.07] px-4 py-3">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+                      <path d="M20 8a9 9 0 0 1 0 8" />
+                    </svg>
+                    <span class="text-[12.5px] font-medium text-white/85">Acercá el celular</span>
+                  </div>
+                  <div class="p-4 text-center">
+                    <div class="mx-auto flex w-fit gap-2" aria-hidden="true">
+                      {[1, 2, 3].map(() => (
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full" style={`background:${acentos.tap.chip}`}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        </span>
+                      ))}
+                      {[1, 2].map(() => (
+                        <span class="h-9 w-9 rounded-full border border-dashed border-white/25" />
+                      ))}
+                    </div>
+                    <p class="mt-3 text-[12px] text-white/60">3 de 5 visitas · premio a 2</p>
+                    <div class="mx-auto mt-3 w-fit rounded-full px-3 py-1.5 text-[11px] font-medium text-white" style={`background:${acentos.tap.chip}`}>
+                      +1 visita acreditada
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 text-center text-[11px] text-white/60">El comercio confirma. Sin apps.</p>
+              </div>
+            )}
+
+            {p.id === "holamappi" && (
+              /* Perfil digital de la mascota, como se ve en holamappi.com:
+                 tarjeta crema, foto, pill "Identificación activa" y
+                 botones Llamar / WhatsApp en el verde de la marca. */
+              <div class="w-full max-w-[270px] transition-transform duration-500 group-hover:-translate-y-1">
+                {/* Huellita decorativa de fondo */}
+                <svg class="pointer-events-none absolute right-4 top-4 opacity-[0.14]" width="110" height="110" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+                  <ellipse cx="7.2" cy="7.4" rx="1.9" ry="2.5" transform="rotate(-18 7.2 7.4)" />
+                  <ellipse cx="12" cy="6" rx="1.9" ry="2.5" />
+                  <ellipse cx="16.8" cy="7.4" rx="1.9" ry="2.5" transform="rotate(18 16.8 7.4)" />
+                  <path d="M12 10.5c3.2 0 5.6 2.1 5.6 4.6 0 2.6-2.6 4.2-5.6 4.2s-5.6-1.6-5.6-4.2c0-2.5 2.4-4.6 5.6-4.6z" />
+                </svg>
+                <div class="overflow-hidden rounded-2xl bg-[#F4F1E8] shadow-2xl shadow-black/40">
+                  <div class="relative">
+                    <img
+                      src="/images/pf/mock-mappi-perro.jpg"
+                      alt=""
+                      loading="lazy"
+                      class="h-[120px] w-full object-cover object-center"
+                    />
+                    <span class="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[9.5px] font-medium text-[#2E4230]">
+                      <span class="h-1.5 w-1.5 rounded-full" style={`background:${acentos.holamappi.chip}`} aria-hidden="true" />
+                      Identificación activa
+                    </span>
+                  </div>
+                  <div class="p-4">
+                    <p class="text-[15px] font-semibold text-[#1F2921]">Boris</p>
+                    <p class="text-[11px] text-[#6B7264]">Dachshund (Teckel) · Macho · 3 años</p>
+                    <p class="mt-1 text-[11px] font-medium" style={`color:${acentos.holamappi.chip}`}>
+                      Muy amigable, le encanta la gente
+                    </p>
+                    <div class="mt-3 space-y-1.5">
+                      <div class="rounded-full py-2 text-center text-[11.5px] font-medium text-[#F4F1E8]" style={`background:${acentos.holamappi.chip}`}>
+                        Llamar
+                      </div>
+                      <div class="rounded-full border border-[#1F2921]/15 bg-white py-2 text-center text-[11.5px] font-medium text-[#1F2921]">
+                        WhatsApp
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 text-center text-[11px] text-white/60">No es un GPS. No rastrea nada.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Pie */}
+          <div class="px-5 py-5">
+            <h3 class="pf-display text-[20px] font-medium text-[#1A1814]">{p.titulo}</h3>
+            <p class="mt-1.5 text-[14.5px] leading-relaxed text-[#616161]">{p.descripcion}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

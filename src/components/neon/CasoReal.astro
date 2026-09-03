@@ -8,6 +8,14 @@ const publicables = casos.filter((c) => c.autorizado);
 const caso = publicables.find((c) => c.antes && c.solucion && c.despues);
 const otros = publicables.filter((c) => c !== caso);
 
+// Los campos pueden faltar (ver `Caso` en negocio.ts): se arma la línea
+// con lo que haya en vez de dejar un " · " colgando.
+// El sistema va primero: en una lista de clientes, lo que le importa al
+// que la lee es QUÉ se construyó, no en qué rubro está la empresa.
+function meta(c: { sistema?: string; rubro?: string; ciudad?: string }): string {
+  return [c.sistema, c.rubro, c.ciudad].filter(Boolean).join(" · ");
+}
+
 const etapas = caso
   ? [
       { etiqueta: "Antes", texto: caso.antes!, tone: "chaos" },
@@ -17,10 +25,10 @@ const etapas = caso
   : [];
 ---
 
-<section id="caso-real" class="relative border-b border-white/[0.08]">
-  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+<section id="caso-real" class="relative border-b border-line">
+  <div class="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-16">
-      <SectionHead index="04" tag="Caso real">
+      <SectionHead tag="Caso real">
         Quién ya está trabajando más <span class="accent text-order">ordenado</span>
       </SectionHead>
 
@@ -31,24 +39,27 @@ const etapas = caso
               <div class="flex items-center gap-3">
                 <span
                   class="h-2 w-2 rounded-full bg-order"
-                  style="box-shadow:0 0 10px rgba(155,92,255,.9)"
                 />
                 <p class="font-display text-[18px] font-semibold text-ink">
                   {caso.empresa}
                 </p>
               </div>
-              <p class="mono mt-3 text-[10px] uppercase tracking-[0.18em] text-ink-3">
-                {caso.rubro} · {caso.ciudad}
-              </p>
+              {meta({ rubro: caso.rubro, ciudad: caso.ciudad }) && (
+                <p class="mono mt-3 text-[11px] uppercase tracking-[0.18em] text-ink-3">
+                  {meta({ rubro: caso.rubro, ciudad: caso.ciudad })}
+                </p>
+              )}
               {caso.duenio && (
                 <p class="mt-1.5 text-[13px] text-ink-2">{caso.duenio}, dueño</p>
               )}
-              <p class="layer-1 mt-5 text-[14.5px] leading-relaxed text-ink-2">
-                {caso.resumen}
-              </p>
+              {caso.resumen && (
+                <p class="layer-1 mt-5 text-[14.5px] leading-relaxed text-ink-2">
+                  {caso.resumen}
+                </p>
+              )}
 
               {caso.metrica && (
-                <div class="mt-6 border-t border-white/[0.08] pt-5">
+                <div class="mt-6 border-t border-line pt-5">
                   <p class="font-display text-d3 font-semibold text-order">
                     {caso.metrica.valor}
                   </p>
@@ -61,38 +72,12 @@ const etapas = caso
       }
     </div>
 
-    <ol class="scene mt-16 grid gap-x-10 gap-y-12 md:grid-cols-3">
-      {
-        etapas.map((etapa, i) => (
-          <li data-reveal data-reveal-delay={String(i * 0.06)}>
-            <div
-              class:list={[
-                "blade h-full p-6 sm:p-7",
-                etapa.tone === "depth" && "blade--depth",
-                etapa.tone === "chaos" && "blade--chaos",
-              ]}
-              style="--blade-d: 10px;"
-            >
-              <div class="flex items-center justify-between">
-                <span
-                  class:list={[
-                    "tag",
-                    etapa.tone === "depth" && "tag--depth",
-                    etapa.tone === "chaos" && "tag--chaos",
-                  ]}
-                >
-                  {etapa.etiqueta}
-                </span>
-                <span class="mono text-[10px] tracking-[0.18em] text-ink-3">
-                  0{i + 1}
-                </span>
-              </div>
-              <p class="mt-6 text-[15.5px] leading-relaxed text-ink-2">{etapa.texto}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+    <!--
+      Acá había un tríptico Antes / Solución / Después: tres párrafos para
+      contar lo que el número de arriba ya dice. Se sacó por eso. Los textos
+      siguen en `negocio.ts` (campos antes/solucion/despues) para el día que
+      cada caso tenga página propia.
+    -->
 
     {
       caso?.testimonio && (
@@ -100,7 +85,7 @@ const etapas = caso
           <p class="max-w-[52ch] font-display text-[20px] font-medium leading-snug text-ink sm:text-[23px]">
             “{caso.testimonio.texto}”
           </p>
-          <footer class="mono mt-6 text-[10.5px] uppercase tracking-[0.18em] text-order">
+          <footer class="mono mt-6 text-[11px] uppercase tracking-[0.18em] text-order">
             {caso.testimonio.autor}
           </footer>
         </blockquote>
@@ -109,26 +94,26 @@ const etapas = caso
 
     {
       otros.length > 0 && (
-        <div class="mt-14 border-t border-white/[0.08] pt-10" data-reveal>
-          <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
+        <div class="mt-14 border-t border-line pt-10" data-reveal>
+          <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3">
             También trabajan con nosotros
           </p>
           <ul class="mt-5 flex flex-wrap gap-3">
             {otros.map((c) => (
-              <li class="flex items-center gap-3 rounded border border-white/[0.1] bg-white/[0.03] px-4 py-3">
+              <li class="flex items-center gap-3 rounded-xl border border-line bg-paper-2 px-4 py-3">
                 <span
                   class="h-2 w-2 rounded-full bg-order"
-                  style="box-shadow:0 0 10px rgba(155,92,255,.9)"
                   aria-hidden="true"
                 />
                 <span>
                   <span class="block font-display text-[14.5px] font-medium text-ink">
                     {c.empresa}
                   </span>
-                  <span class="mono mt-1 block text-[9.5px] uppercase tracking-[0.16em] text-ink-3">
-                    {c.rubro} · {c.ciudad}
-                    {c.duenio && ` · ${c.duenio}`}
-                  </span>
+                  {meta(c) && (
+                    <span class="mono mt-1 block text-[11px] uppercase tracking-[0.16em] text-ink-3">
+                      {meta(c)}
+                    </span>
+                  )}
                 </span>
               </li>
             ))}

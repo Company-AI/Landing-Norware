@@ -1,153 +1,198 @@
 ---
-import { site } from "../../utils/site";
+import { whatsappLink } from "../../utils/site";
+import { caminos, inicioDe } from "../../utils/secciones";
+import { desdeTexto } from "../../utils/estudio";
+import { casos } from "../../utils/negocio";
 
-// El visitante elige su rubro en la primera pantalla. A partir de ahí la
-// página le habla a él: cambia la bajada y la pantalla de producto.
-// Las bajadas son condensaciones de las descripciones que ya estaban
-// en la sección de soluciones: no hay promesas nuevas.
+// El hero bifurca antes de preguntar nada más: la página le habla a dos
+// visitantes con problemas distintos, el que tiene un negocio desordenado
+// y el que tiene un proyecto que todavía no existe.
+//
+// Se fue el canvas de partículas 3D que ocupaba la mitad derecha. Era
+// bonito y no decía nada: ninguno de los estudios que se tomaron de
+// referencia pone una animación abstracta al lado de la promesa, ponen
+// PRUEBA. Ahora ahí va el único número duro y verificable que tenemos.
+
 const rubros = [
-  {
-    id: "inmobiliarias",
-    label: "Inmobiliaria",
-    linea:
-      "Propiedades, contratos, pagos y vencimientos en un solo lugar. Sin planillas.",
-  },
-  {
-    id: "talleres",
-    label: "Taller o lubricentro",
-    linea:
-      "Turnos, historial de cada vehículo, stock y recordatorios en un solo lugar.",
-  },
-  {
-    id: "ecommerce",
-    label: "Comercio o ecommerce",
-    linea:
-      "Pedidos, stock y ventas online en un solo lugar, siempre actualizado.",
-  },
-  {
-    id: "a-medida",
-    label: "Otro rubro",
-    linea:
-      "Una herramienta hecha para tu proceso, no un sistema genérico al que adaptarte. Cualquiera sea tu rubro.",
-  },
+  { id: "inmobiliarias", label: "Inmobiliaria" },
+  { id: "talleres", label: "Taller o lubricentro" },
+  { id: "ecommerce", label: "Comercio o ecommerce" },
+  { id: "a-medida", label: "Otro rubro" },
 ];
+
+const desde = desdeTexto();
+
+// El caso con métrica cargada. Si mañana no hay ninguno, la columna
+// derecha no se dibuja y el hero queda a una sola columna: sigue bien.
+const prueba = casos.find((c) => c.autorizado && c.metrica);
+
+const waProyecto = whatsappLink(
+  "Hola Norware, tengo un proyecto para construir y quiero contarles de qué se trata."
+);
 ---
 
-<section class="relative border-b border-white/[0.08]">
-  <div class="mx-auto max-w-[1400px] px-5 pt-14 sm:px-8 lg:px-12 lg:pt-16">
-    <div class="grid items-start gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-      <!-- Mensaje -->
-      <div class="lg:pt-4">
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-2" data-reveal>
-          <span class="tag">{site.name} Studio</span>
-          <span class="hidden h-px w-10 bg-white/15 sm:block"></span>
-          <span class="index">Río Cuarto · Córdoba</span>
+<section class="relative">
+  <div class="mx-auto max-w-[1200px] px-5 pb-14 pt-12 sm:px-8 lg:pb-20 lg:pt-16">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2" data-reveal>
+          <span class="tag">Estudio de software</span>
+          <span class="index">·</span>
+          <span class="index">Río Cuarto, Córdoba</span>
+          {
+            desde && (
+              <>
+                <span class="index">·</span>
+                <span class="index">{desde}</span>
+              </>
+            )
+          }
         </div>
 
         <h1
-          class="mt-7 max-w-[13ch] font-display text-d1 font-bold text-ink"
+          class="mt-6 max-w-[19ch] font-display text-d1 font-semibold text-ink"
           data-reveal
           data-reveal-delay="0.05"
         >
-          Sistemas simples para <span class="accent text-order">ordenar</span> tu negocio
+          Construimos software a la <span class="accent text-order">medida</span> de cómo trabajás
         </h1>
 
-        <!-- Bajada concreta, según el rubro elegido -->
-        <div class="mt-7 min-h-[3.5rem]" data-reveal data-reveal-delay="0.1">
+        <div class="mt-6 min-h-[4.5rem]" data-reveal data-reveal-delay="0.1">
           {
-            rubros.map((r) => (
-              <p
-                data-rubro-panel={r.id}
-                class="max-w-[42ch] text-[18px] leading-relaxed text-ink sm:text-[20px]"
-              >
-                {r.linea}
+            caminos.map((c) => (
+              <p data-via-panel={c.id} class="max-w-[50ch] text-[17px] leading-relaxed text-ink-2 sm:text-[18px]">
+                {c.bajada}
               </p>
             ))
           }
         </div>
 
-        <!-- Selector de rubro -->
+        <!-- ================================ LA BIFURCACIÓN -->
         <div class="mt-8" data-reveal data-reveal-delay="0.14">
-          <p class="mono mb-3.5 text-[10px] uppercase tracking-[0.22em] text-ink-3">
-            ¿Qué tenés?
+          <p class="mono mb-3 text-[11px] font-semibold uppercase tracking-[0.09em] text-ink-3">
+            ¿A qué venís?
           </p>
-          <div class="flex flex-wrap gap-2.5">
+
+          <div class="grid gap-3 sm:grid-cols-2">
             {
-              rubros.map((r) => (
+              caminos.map((c) => (
                 <button
                   type="button"
-                  data-rubro-btn={r.id}
+                  data-via-btn={c.id}
                   aria-pressed="false"
-                  class="rounded border border-white/[0.14] bg-white/[0.03] px-4 py-2.5 font-display text-[13.5px] font-medium text-ink-2"
+                  class="via-card rounded-xl border border-line bg-paper-2 px-4 py-3.5 text-left"
                 >
-                  {r.label}
+                  <span class="block font-display text-[15.5px] font-semibold leading-snug text-ink">
+                    {c.label}
+                  </span>
+                  <span class="mt-1.5 block text-[13px] leading-relaxed text-ink-3">
+                    {c.detalle}
+                  </span>
                 </button>
               ))
             }
           </div>
-          <p class="mt-3.5 max-w-[58ch] text-[13px] leading-relaxed text-ink-3">
-            Si tu negocio hoy funciona con planillas, papeles o mensajes, es
-            para vos. Los tres primeros ya los tenemos armados; cualquier otro
-            rubro lo hacemos a medida.
-          </p>
         </div>
 
-        <div class="mt-9 flex flex-col gap-4 sm:flex-row" data-reveal data-reveal-delay="0.18">
-          <a href="#diagnostico" class="btn btn-primary">
-            Ver qué ordenar primero
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a href="#soluciones" data-rubro-go class="btn btn-ghost">
-            Ver la solución de mi rubro
-          </a>
-        </div>
-
-        <p class="mt-6 text-[13.5px] text-ink-3" data-reveal data-reveal-delay="0.22">
-          3 preguntas, resultado en pantalla. Sin compromiso y sin dejar datos
-          para verlo.
-        </p>
-      </div>
-
-      <!-- Parcela: la escena 3D, encuadrada -->
-      <div class="relative" data-reveal data-reveal-delay="0.12">
-        <div class="relative border border-white/[0.1] bg-void-2">
-          <span class="tick tick--tl" aria-hidden="true"></span>
-          <span class="tick tick--tr" aria-hidden="true"></span>
-          <span class="tick tick--bl" aria-hidden="true"></span>
-          <span class="tick tick--br" aria-hidden="true"></span>
-
-          <div class="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
-            <span class="mono text-[10px] uppercase tracking-[0.16em] text-ink-2">
-              Desorden → sistema
-            </span>
-            <span class="mono flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-order">
-              <span class="h-1.5 w-1.5 rounded-full bg-order" style="box-shadow:0 0 8px rgba(155,92,255,.9)"></span>
-              Ensamblando
-            </span>
+        <!-- ============== Camino "ordenar": además elige su rubro -->
+        <div data-via-panel="ordenar">
+          <div class="mt-7" data-reveal data-reveal-delay="0.16">
+            <p class="mono mb-3 text-[11px] font-semibold uppercase tracking-[0.09em] text-ink-3">
+              ¿Qué tenés?
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {
+                rubros.map((r) => (
+                  <button
+                    type="button"
+                    data-rubro-btn={r.id}
+                    aria-pressed="false"
+                    class="rounded-full border border-line bg-transparent px-4 py-2 text-[13.5px] font-medium text-ink-2"
+                  >
+                    {r.label}
+                  </button>
+                ))
+              }
+            </div>
           </div>
 
-          <div class="relative aspect-[4/3] w-full">
-            <canvas id="nw-hero-canvas" class="h-full w-full" aria-hidden="true"></canvas>
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row" data-reveal data-reveal-delay="0.2">
+            <a href="#diagnostico" class="btn btn-primary">
+              Ver qué ordenar primero
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="#soluciones" data-rubro-go class="btn btn-ghost">
+              Ver la solución de mi rubro
+            </a>
           </div>
+
+        </div>
+
+        <!-- ============== Camino "construir" -->
+        <div data-via-panel="construir">
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row" data-reveal data-reveal-delay="0.2">
+            <a href={inicioDe("construir")} class="btn btn-primary">
+              Ver qué construimos
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href={waProyecto} target="_blank" rel="noopener" class="btn btn-ghost">
+              Contar mi proyecto
+            </a>
+          </div>
+
         </div>
       </div>
+
+      <!-- Prueba, no decoración -->
+      {
+        prueba?.metrica && (
+          <aside class="blade p-7 sm:p-8" data-reveal data-reveal-delay="0.12">
+            <p class="mono text-[11px] font-semibold uppercase tracking-[0.09em] text-ink-3">
+              Un cliente, un número
+            </p>
+            <p class="mt-5 font-display text-[clamp(3rem,7vw,4.2rem)] font-semibold leading-none text-order">
+              {prueba.metrica.valor}
+            </p>
+            <p class="mt-4 max-w-[26ch] text-[16px] leading-relaxed text-ink">
+              {prueba.metrica.detalle}
+            </p>
+            <div class="mt-6 border-t border-line pt-5">
+              <p class="font-display text-[16px] font-semibold text-ink">{prueba.empresa}</p>
+              <p class="mt-1 text-[13.5px] text-ink-3">
+                {[prueba.rubro, prueba.ciudad].filter(Boolean).join(" · ")}
+              </p>
+            </div>
+          </aside>
+        )
+      }
     </div>
   </div>
 </section>
 
+<style>
+  .via-card {
+    transition:
+      border-color 0.22s ease,
+      background-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+  .via-card:hover {
+    border-color: var(--line-strong);
+  }
+  .via-card.is-on {
+    border-color: var(--order);
+    background: var(--order-wash);
+    box-shadow: 0 0 0 1px var(--order);
+  }
+</style>
+
 <script>
   import "../../scripts/rubro";
-
-  const canvas = document.getElementById("nw-hero-canvas");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const saveData = Boolean((navigator as any).connection?.saveData);
-
-  if (canvas instanceof HTMLCanvasElement && !reduce && !saveData) {
-    import("../../scripts/hero-scene")
-      .then((m) => m.initHeroScene(canvas))
-      .catch(() => {});
-  }
+  import "../../scripts/via";
 </script>

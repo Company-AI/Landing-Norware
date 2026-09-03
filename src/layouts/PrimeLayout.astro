@@ -1,0 +1,241 @@
+---
+import { site } from "../utils/site";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const fullTitle = `${site.name} — ${title}`;
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Norware Studio",
+  description: site.description,
+  url: site.url,
+  email: site.email,
+  areaServed: {
+    "@type": "City",
+    name: "Río Cuarto",
+    containedInPlace: { "@type": "State", name: "Córdoba, Argentina" },
+  },
+  knowsAbout: [
+    "Software para inmobiliarias",
+    "Sistema para talleres mecánicos y lubricentros",
+    "Fidelización NFC para comercios",
+    "Control de stock",
+    "Software a medida para pymes",
+    "Inteligencia artificial aplicada con criterio",
+  ],
+});
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#FAF9F8" />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Norware" />
+    <meta property="og:image" content="/og.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <title>{fullTitle}</title>
+
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <!-- Schibsted Grotesk para display, Inter para texto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#FAF9F8] font-sans text-[#212121] antialiased">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  /* Display: titulares grandes con tracking positivo, como la referencia */
+  .pf-display {
+    font-family: "Schibsted Grotesk", "Inter", system-ui, sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+  }
+
+  /* Texto apoyado sobre fotografías: sombra que garantiza lectura
+     aunque la zona de la imagen sea clara. */
+  .pf-onimg {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 2px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  /* ------------------------------------------------ scroll reveal */
+  /* Visible por defecto (seguro sin JS). El estado oculto se activa
+     solo cuando el script confirma que puede correr. */
+  html.reveal-on .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  html.reveal-on .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---------------------------------------- spinner braille (eyebrow) */
+  .braille {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 3px);
+    gap: 2px;
+    margin-right: 8px;
+    vertical-align: 1px;
+  }
+  .braille i {
+    width: 3px;
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.25;
+    animation: braille-cycle 1.2s steps(1) infinite;
+  }
+  .braille i:nth-child(2) { animation-delay: 0.2s; }
+  .braille i:nth-child(3) { animation-delay: 0.4s; }
+  .braille i:nth-child(4) { animation-delay: 0.6s; }
+  .braille i:nth-child(5) { animation-delay: 0.8s; }
+  .braille i:nth-child(6) { animation-delay: 1s; }
+  @keyframes braille-cycle {
+    0% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  /* --------------------------------------------------- marquee */
+  @keyframes pf-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .pf-marquee {
+    animation: pf-marquee 36s linear infinite;
+  }
+
+  /* --------------------------------------------- odómetro (cifras) */
+  .odo-char {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s ease;
+  }
+  .odo.is-visible .odo-char {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------ mesh del CTA */
+  @keyframes pf-mesh-a {
+    0%, 100% { transform: translate3d(-8%, -6%, 0) rotate(0deg) scale(1); }
+    50% { transform: translate3d(10%, 8%, 0) rotate(18deg) scale(1.15); }
+  }
+  @keyframes pf-mesh-b {
+    0%, 100% { transform: translate3d(6%, 4%, 0) rotate(0deg) scale(1.05); }
+    50% { transform: translate3d(-10%, -8%, 0) rotate(-14deg) scale(1); }
+  }
+  .pf-mesh-a { animation: pf-mesh-a 18s ease-in-out infinite; }
+  .pf-mesh-b { animation: pf-mesh-b 22s ease-in-out infinite; }
+
+  /* ------------------------------------------- reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    html.reveal-on .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .pf-marquee,
+    .pf-mesh-a,
+    .pf-mesh-b,
+    .braille i {
+      animation: none !important;
+    }
+    .odo-char {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+  }
+
+  /* Scrollbars discretos en los carruseles */
+  .pf-scroll {
+    scrollbar-width: none;
+  }
+  .pf-scroll::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  // Scroll-reveal accesible con red de seguridad.
+  const reveals = document.querySelectorAll(".reveal");
+  const odos = document.querySelectorAll(".odo");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const showAll = () => {
+    reveals.forEach((el) => el.classList.add("is-visible"));
+    odos.forEach((el) => el.classList.add("is-visible"));
+  };
+
+  if (reduce || !("IntersectionObserver" in window)) {
+    showAll();
+  } else {
+    document.documentElement.classList.add("reveal-on");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    reveals.forEach((el) => io.observe(el));
+    odos.forEach((el) => io.observe(el));
+    window.setTimeout(showAll, 3000);
+  }
+</script>

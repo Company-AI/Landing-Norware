@@ -8,37 +8,29 @@ import { whatsappDefault } from "../../utils/site";
 // Las que faltan están listadas en `faqPendientes` dentro de negocio.ts.
 ---
 
-<section id="faq" class="relative border-b border-white/[0.08]">
-  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="08" tag="Antes de contratar">
+<section id="faq" class="relative border-b border-line">
+  <div class="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+    <div>
+      <SectionHead tag="Antes de contratar">
         Lo que te vas a preguntar <span class="accent text-order">ahora</span>
       </SectionHead>
 
-      <p
-        class="max-w-[52ch] text-[16.5px] leading-relaxed text-ink-2 lg:pt-20"
-        data-reveal
-        data-reveal-delay="0.08"
-      >
-        Si te queda alguna sin responder, escribinos y la contestamos derecho
-        viejo.
-      </p>
     </div>
 
-    <div class="mt-14 border-t border-white/[0.08]">
+    <div class="mt-10 border-t border-line">
       {
         faq.map((item, i) => (
-          <details class="faq group border-b border-white/[0.08]">
-            <summary class="flex cursor-pointer list-none items-start gap-5 py-6 pr-4">
-              <span class="mono mt-1 shrink-0 text-[10.5px] tracking-[0.16em] text-ink-3">
+          <details class="faq group border-b border-line">
+            <summary class="flex cursor-pointer list-none items-start gap-5 py-4 pr-4">
+              <span class="mono mt-1 shrink-0 text-[11px] tracking-[0.16em] text-ink-3">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span class="flex-1 font-display text-[17px] font-medium leading-snug text-ink sm:text-[19px]">
+              <span class="flex-1 font-display text-[16px] font-medium leading-snug text-ink sm:text-[17.5px]">
                 {item.q}
               </span>
               <span class="signo mt-1.5 shrink-0" aria-hidden="true" />
             </summary>
-            <p class="max-w-[70ch] pb-7 pl-[3.1rem] pr-4 text-[15px] leading-relaxed text-ink-2">
+            <p class="max-w-[70ch] pb-6 pl-[3.1rem] pr-4 text-[14.5px] leading-relaxed text-ink-2">
               {item.a}
             </p>
           </details>
@@ -46,7 +38,7 @@ import { whatsappDefault } from "../../utils/site";
       }
     </div>
 
-    <div class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center" data-reveal>
+    <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center" data-reveal>
       <p class="text-[15px] text-ink-2">¿Te quedó otra duda?</p>
       <a href={whatsappDefault} target="_blank" rel="noopener" class="link-arrow text-[15px]">
         Preguntanos por WhatsApp
@@ -67,7 +59,7 @@ import { whatsappDefault } from "../../utils/site";
     transition: background-color 0.3s ease;
   }
   .faq:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--paper-2);
   }
 
   /* Cruz que gira a menos al abrir */

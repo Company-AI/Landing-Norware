@@ -13,19 +13,18 @@ const { title, meta = "norware", pie, class: klass = "" } = Astro.props;
 
 <figure class:list={["relative", klass]}>
   <div class="blade overflow-hidden" style="--blade-d: 10px;">
-    <div class="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
+    <div class="flex items-center justify-between border-b border-line px-4 py-2.5">
       <div class="flex items-center gap-2.5">
         <span
-          class="h-1.5 w-1.5 rounded-full bg-order"
-          style="box-shadow:0 0 8px rgba(155,92,255,.9)"></span>
+          class="h-1.5 w-1.5 rounded-full bg-order"></span>
         <span class="font-display text-[12.5px] font-medium text-ink">{title}</span>
       </div>
       <span class="flex items-center gap-2.5">
         <!-- Honestidad: hoy son maquetas, no capturas del sistema real. -->
-        <span class="mono rounded border border-white/[0.12] px-1.5 py-0.5 text-[8.5px] uppercase tracking-[0.14em] text-ink-3">
+        <span class="mono rounded border border-line-strong px-1.5 py-0.5 text-[11px] uppercase tracking-[0.14em] text-ink-3">
           Ejemplo
         </span>
-        <span class="mono text-[9.5px] uppercase tracking-[0.16em] text-ink-3">
+        <span class="mono text-[11px] uppercase tracking-[0.16em] text-ink-3">
           {meta}
         </span>
       </span>

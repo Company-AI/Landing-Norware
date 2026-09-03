@@ -1,26 +1,34 @@
 ---
 import { site, navItems, productLines, whatsappDefault } from "../../utils/site";
+import { estudio } from "../../utils/estudio";
 
 const year = new Date().getFullYear();
+
+// "Norware Studio · desde 2024". Si el año no está cargado en
+// `estudio.ts`, el footer no menciona antigüedad y queda igual de bien.
+const firma =
+  estudio.desde !== null
+    ? `Norware Studio · desde ${estudio.desde}`
+    : "Norware Studio";
 ---
 
-<footer class="relative bg-void-2 pb-24 lg:pb-0">
-  <div class="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+<footer class="relative bg-paper-2 pb-24 lg:pb-0">
+  <div class="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
       <div>
         <a href="/" class="flex items-center gap-3" aria-label="Norware, inicio">
-          <span class="h-6 w-6 rotate-45 border border-order/60 bg-order/15" style="box-shadow:0 0 18px -4px rgba(155,92,255,.9)" aria-hidden="true"></span>
+          <span class="h-6 w-6 rotate-45 border border-order/60 bg-order/15" aria-hidden="true"></span>
           <span class="font-display text-[20px] font-bold tracking-[-0.03em] text-ink">
             Norware
           </span>
         </a>
 
         <p class="mt-6 max-w-sm text-[14.5px] leading-relaxed text-ink-2">
-          Convertimos procesos desordenados en sistemas simples para que tu
-          negocio funcione mejor.
+          Estudio de software. Ordenamos negocios que hoy funcionan con
+          planillas y papeles, y construimos productos desde cero.
         </p>
 
-        <p class="mono mt-8 text-[10px] uppercase tracking-[0.18em] text-ink-3">
+        <p class="mono mt-8 text-[11px] uppercase tracking-[0.18em] text-ink-3">
           {site.city}
         </p>
 
@@ -56,7 +64,7 @@ const year = new Date().getFullYear();
       </div>
 
       <nav aria-label="Soluciones">
-        <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Soluciones</p>
+        <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Soluciones</p>
         <ul class="mt-5 space-y-3">
           {
             productLines.map((line) => (
@@ -74,7 +82,7 @@ const year = new Date().getFullYear();
       </nav>
 
       <nav aria-label="Sitio">
-        <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Sitio</p>
+        <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Sitio</p>
         <ul class="mt-5 space-y-3">
           {
             navItems.map((item) => (
@@ -96,10 +104,9 @@ const year = new Date().getFullYear();
 
     <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <p class="text-[13px] text-ink-3">
-        {year} Norware Studio. Software para empresas que quieren trabajar más
-        ordenadas.
+        {`${year} ${firma}.`} Software a medida para tu negocio o tu proyecto.
       </p>
-      <p class="mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
+      <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3">
         Río Cuarto · ARG
       </p>
     </div>

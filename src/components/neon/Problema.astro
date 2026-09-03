@@ -17,16 +17,16 @@ const dolores = [
 const VISIBLES = 4;
 ---
 
-<section id="problema" class="relative overflow-hidden border-b border-white/[0.08]">
+<section id="problema" class="relative overflow-hidden border-b border-line">
   <div
     class="pointer-events-none absolute inset-0"
     style="background: radial-gradient(70% 55% at 84% 6%, rgba(255,106,69,.09), transparent 62%);"
     aria-hidden="true">
   </div>
 
-  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+  <div class="relative mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="02" tag="Estado actual" tone="chaos">
+      <SectionHead tag="Estado actual" tone="chaos">
         Tu negocio funciona, pero cada vez cuesta más <span class="accent text-chaos">controlarlo</span>
       </SectionHead>
 
@@ -42,19 +42,19 @@ const VISIBLES = 4;
     </div>
 
     <!-- Tabla de dolores: las celdas se ensamblan desde el desorden -->
-    <ul class="scene mt-14 grid border border-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+    <ul class="scene mt-14 grid border border-line sm:grid-cols-2 lg:grid-cols-4">
       {
         dolores.map((dolor, i) => (
           <li
             class:list={[
-              "chaos-item cell relative flex items-start gap-4 border-b border-white/[0.08] px-5 py-6 sm:px-6",
+              "chaos-item cell relative flex items-start gap-4 border-b border-line px-5 py-6 sm:px-6",
               (i + 1) % 2 !== 0 && "sm:border-r",
               (i + 1) % 4 !== 0 && "lg:border-r",
               (i + 1) % 2 === 0 && "sm:border-r-0 lg:border-r",
               i >= VISIBLES && "extra hidden",
             ]}
           >
-            <span class="mono mt-0.5 text-[10.5px] tracking-[0.16em] text-chaos/70">
+            <span class="mono mt-0.5 text-[11px] tracking-[0.16em] text-chaos/70">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span class="text-[14.5px] leading-snug text-ink-2">{dolor}</span>
@@ -68,7 +68,7 @@ const VISIBLES = 4;
       id="ver-mas-dolores"
       type="button"
       aria-expanded="false"
-      class="mono mt-6 inline-flex items-center gap-2.5 text-[10.5px] uppercase tracking-[0.2em] text-ink-3 transition-colors hover:text-order"
+      class="mono mt-6 inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.2em] text-ink-3 transition-colors hover:text-order"
     >
       <span class="h-2 w-2 rotate-45 border border-current" aria-hidden="true"></span>
       <span id="ver-mas-label">Ver los otros 5</span>
@@ -107,7 +107,7 @@ const VISIBLES = 4;
     transition: background-color 0.35s ease;
   }
   .cell:hover {
-    background: rgba(255, 255, 255, 0.025);
+    background: var(--paper-2);
   }
   .mark {
     position: absolute;

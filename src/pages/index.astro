@@ -1,51 +1,58 @@
 ---
-import NeonLayout from "../layouts/NeonLayout.astro";
-import Rail from "../components/neon/Rail.astro";
-import Hero from "../components/neon/Hero.astro";
-import Producto from "../components/neon/Producto.astro";
-import Problema from "../components/neon/Problema.astro";
-import Soluciones from "../components/neon/Soluciones.astro";
-import CasoReal from "../components/neon/CasoReal.astro";
-import Precio from "../components/neon/Precio.astro";
-import Proceso from "../components/neon/Proceso.astro";
-import IA from "../components/neon/IA.astro";
-import FAQ from "../components/neon/FAQ.astro";
-import Diagnostico from "../components/neon/Diagnostico.astro";
-import Proximamente from "../components/neon/Proximamente.astro";
-import Footer from "../components/neon/Footer.astro";
+import PrimeLayout from "../layouts/PrimeLayout.astro";
+import Nav from "../components/prime/Nav.astro";
+import Hero from "../components/prime/Hero.astro";
+import Ticker from "../components/prime/Ticker.astro";
+import ComoFunciona from "../components/prime/ComoFunciona.astro";
+import Productos from "../components/prime/Productos.astro";
+import Casos from "../components/prime/Casos.astro";
+import Rubros from "../components/prime/Rubros.astro";
+import Confianza from "../components/prime/Confianza.astro";
+import Resultados from "../components/prime/Resultados.astro";
+import CTAFinal from "../components/prime/CTAFinal.astro";
+import Footer from "../components/prime/Footer.astro";
 
 /*
- * Orden pensado desde la cabeza de un dueño de pyme que entra por primera vez:
+ * Home rediseñada sobre un patrón de "hoja deslizante":
  *
- *   Hero        ¿me hablás a mí?        → elige su rubro
- *   01 Producto ¿qué me das?            → ve las pantallas de SU rubro
- *   02 Problema ¿me entendés?           → 4 dolores, el resto a un clic
- *   03 Soluciones ¿qué ofrecés?
- *   04 Caso real ¿alguien lo usa?
- *   05 Precio   ¿me da el cuero?        → antes de pedirle nada
- *   06 Proceso  ¿cómo lo hacés?
- *   07 IA       ¿me vas a vender humo?
- *   08 FAQ      ¿qué pasa si...?
- *   09 Cercanía ¿estás cerca?
- *   10 Diagnóstico + contacto → recién acá se le pide el contacto
+ *   - El hero queda FIJO a pantalla completa, con su carrusel de
+ *     pestañas (estudio / inmobiliarias / talleres / comercios).
+ *   - Todo lo demás vive en <main>, una hoja clara con esquinas
+ *     redondeadas que se desliza POR ENCIMA del hero al scrollear.
+ *
+ * Orden del contenido:
+ *   Ticker        clientes y productos reales
+ *   Cómo funciona diagrama caos → sistema
+ *   Productos     4 tarjetas (IN / AF / Tap / holamappi)
+ *   Casos         carrusel de frases descriptivas (sin testimonios
+ *                 inventados; ver nota en utils/prime.ts)
+ *   Rubros        carrusel por rubro
+ *   Confianza     criterio (IA, datos, soporte)
+ *   Resultados    cifras reales con foto
+ *   Contacto      CTA final con malla de color
+ *
+ * La versión anterior de la home (componentes `neon/`) sigue intacta
+ * en el repo por si hay que volver.
  */
 ---
 
-<!-- La descripción sale de `site.description`: una sola fuente de verdad. -->
-<NeonLayout title="Sistemas simples para ordenar tu negocio">
-  <Rail />
-  <main id="contenido">
-    <Hero />
-    <Producto />
-    <Problema />
-    <Soluciones />
-    <CasoReal />
-    <Precio />
-    <Proceso />
-    <IA />
-    <FAQ />
-    <Diagnostico />
-    <Proximamente />
+<PrimeLayout title="Sistemas simples para negocios reales">
+  <Nav />
+  <Hero />
+
+  <!-- La hoja: tapa el hero al scrollear -->
+  <main
+    id="contenido"
+    class="relative z-10 -mt-4 rounded-t-2xl bg-[#FAF9F8] pb-0 shadow-[0_-12px_40px_rgba(0,0,0,0.18)]"
+  >
+    <Ticker />
+    <ComoFunciona />
+    <Productos />
+    <Casos />
+    <Rubros />
+    <Confianza />
+    <Resultados />
+    <CTAFinal />
+    <Footer />
   </main>
-  <Footer />
-</NeonLayout>
+</PrimeLayout>

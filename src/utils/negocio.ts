@@ -50,9 +50,19 @@ export const hayPrecio = precio.abonoDesde !== null || precio.setupDesde !== nul
 
 export interface Caso {
     empresa: string;
-    rubro: string;
-    ciudad: string;
-    resumen: string;
+    /**
+     * Rubro, ciudad y resumen son opcionales a propósito.
+     *
+     * La lista "También trabajan con nosotros" solo necesita el nombre.
+     * Antes eran obligatorios y eso empujaba a rellenarlos de memoria
+     * para poder sumar un cliente: justo lo que esta web no hace. Ahora
+     * un cliente se puede nombrar hoy y completar cuando el dato esté.
+     */
+    rubro?: string;
+    ciudad?: string;
+    resumen?: string;
+    /** Cómo se llama lo que se le entregó, si tiene nombre propio. */
+    sistema?: string;
     /** Dueño o referente. Se muestra junto al nombre de la empresa. */
     duenio?: string;
     /** Si están los tres, se muestra el tríptico Antes / Solución / Después. */
@@ -75,6 +85,7 @@ export const casos: Caso[] = [
         empresa: "Inmobiliaria Generar",
         rubro: "Inmobiliaria",
         ciudad: "Río Cuarto",
+        sistema: "Sistema de gestión inmobiliaria",
         resumen:
             "Implementamos un sistema para centralizar la gestión diaria y reducir la dependencia de planillas.",
         antes: "La gestión dependía de planillas, mensajes y controles manuales.",
@@ -112,6 +123,7 @@ export const casos: Caso[] = [
         empresa: "Cl Transmisiones",
         rubro: "Taller de transmisiones",
         ciudad: "Río Cuarto",
+        sistema: "autoficha360",
         resumen:
             "Ordenamos la operación del taller: turnos, historial de cada vehículo y seguimiento del trabajo.",
         duenio: "Claudio Lucero",
@@ -121,7 +133,45 @@ export const casos: Caso[] = [
         testimonio: null,
         metrica: null,
     },
+    {
+        empresa: "RepMaq SRL",
+        sistema: "Sistema de stock",
+        // Falta rubro y ciudad. Con eso la fila dice bastante más.
+        autorizado: true,
+        testimonio: null,
+        metrica: null,
+    },
+    {
+        empresa: "Makeda Bazar y Deco",
+        // Falta rubro, ciudad y qué se le entregó. Con eso la fila dice más.
+        autorizado: true,
+        testimonio: null,
+        metrica: null,
+    },
+    {
+        empresa: "Atul Vinos",
+        // Falta rubro, ciudad y qué se le entregó. Con eso la fila dice más.
+        autorizado: true,
+        testimonio: null,
+        metrica: null,
+    },
+    {
+        empresa: "Kairo Bar",
+        rubro: "Bar",
+        ciudad: "Río Cuarto",
+        sistema: "Landing de apertura",
+        autorizado: true,
+        testimonio: null,
+        metrica: null,
+    },
 ];
+
+/*
+ * autoficha360 no figura como cliente: es el sistema que usa Cl
+ * Transmisiones, así que va como `sistema` en esa ficha y no como
+ * una empresa aparte. Si mañana lo usa más de un taller, conviene
+ * moverlo a `productos` en `estudio.ts` y mostrarlo como producto.
+ */
 
 /* --------------------------------------------------------- FAQ */
 

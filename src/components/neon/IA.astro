@@ -1,9 +1,19 @@
 ---
 import SectionHead from "./SectionHead.astro";
+import { casoIA } from "../../utils/estudio";
 
 // Antes esta sección medía 2,8 pantallas de celular para decir algo que
 // entra en una frase. Se fue el orbe WebGL y los ocho chips sueltos:
 // queda la postura, las cuatro capas y nada más.
+//
+// Lo que le faltaba: la postura sola no prueba nada. "No vendemos IA por
+// moda" lo escribe cualquiera; lo que separa a quien la sabe usar es
+// poder mostrar algo construido Y dónde le pusieron el freno. Eso es el
+// bloque de abajo, y sale de `casoIA` en `estudio.ts` (se puede apagar
+// desde ahí con `publicable: false`).
+//
+// La empresa donde corre no se nombra: no hay OK para hacerlo, y la
+// capacidad se entiende igual sin el nombre.
 const capas = [
   { label: "Datos", detalle: "Dónde vive la información" },
   { label: "Orden", detalle: "Procesos y responsables claros" },
@@ -12,34 +22,31 @@ const capas = [
 ];
 ---
 
-<section id="ia" class="relative overflow-hidden border-b border-white/[0.08]">
+<section id="ia" class="relative overflow-hidden border-b border-line">
   <div
     class="pointer-events-none absolute inset-0"
     style="background: radial-gradient(58% 60% at 82% 40%, rgba(76,110,245,.13), transparent 62%);"
     aria-hidden="true">
   </div>
 
-  <div class="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-24">
-    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+  <div class="relative mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+    <div>
       <div>
-        <SectionHead index="07" tag="Inteligencia artificial" tone="depth">
+        <SectionHead tag="Inteligencia artificial" tone="depth">
           IA aplicada con <span class="accent text-order">criterio</span>, no por moda
         </SectionHead>
 
         <p
-          class="mt-9 max-w-[54ch] text-[16.5px] leading-relaxed text-ink-2"
+          class="mt-7 max-w-[38ch] text-[17px] leading-relaxed text-ink-2"
           data-reveal
           data-reveal-delay="0.08"
         >
-          Primero entendemos cómo trabaja tu empresa y qué tareas se repiten.
-          Recién ahí definimos si tiene sentido usar IA, una automatización o
-          simplemente un sistema más ordenado. Cuando suma, la usamos para
-          responder consultas repetitivas, clasificar mensajes, resumir
-          información, generar reportes o detectar oportunidades de mejora.
+          Primero miramos qué se repite y dónde se pierde tiempo. Muchas veces
+          la respuesta no es IA: es ordenar el dato.
         </p>
 
         <blockquote
-          class="blade blade--depth mt-9 px-7 py-7"
+          class="blade blade--depth mt-7 px-6 py-6"
           style="--blade-d: 12px;"
           data-reveal
           data-reveal-delay="0.12"
@@ -51,47 +58,56 @@ const capas = [
         </blockquote>
       </div>
 
-      <!-- Las cuatro capas: la IA se apoya en lo de abajo -->
-      <div class="lg:pt-24">
-        <ol class="space-y-3">
-          {
-            capas.map((capa, i) => (
-              <li
-                class:list={[
-                  "blade flex items-center gap-5 px-5 py-3.5 sm:px-6",
-                  i === capas.length - 1 && "blade--depth",
-                ]}
-                style={`margin-left: calc(${capas.length - 1 - i} * var(--stack, 0px)); --blade-d: ${5 + i * 3}px;`}
-                data-reveal
-                data-reveal-delay={String(i * 0.05)}
-              >
-                <span
-                  class:list={[
-                    "h-3 w-3 shrink-0 rotate-45 border",
-                    i === capas.length - 1
-                      ? "border-depth bg-depth/40"
-                      : "border-order/70 bg-order/20",
-                  ]}
-                  aria-hidden="true"
-                />
-                <div class="flex-1">
-                  <p class="font-display text-[15px] font-semibold text-ink">
-                    {capa.label}
-                  </p>
-                  <p class="mt-0.5 text-[13px] text-ink-2">{capa.detalle}</p>
-                </div>
-                <span class="mono text-[10px] tracking-[0.16em] text-ink-3">
-                  0{i + 1}
-                </span>
-              </li>
-            ))
-          }
-        </ol>
-        <p class="mono mt-4 text-[10px] uppercase tracking-[0.18em] text-ink-3">
-          Cada capa se apoya en la de abajo
-        </p>
-      </div>
     </div>
+
+    {
+      casoIA.publicable && (
+        <div class="mt-12 border-t border-line pt-10">
+          <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+            <div>
+              <p class="mono text-[11px] uppercase tracking-[0.2em] text-ink-3" data-reveal>
+                Lo más complejo que construimos con IA
+              </p>
+              <h3
+                class="mt-5 max-w-[16ch] font-display text-d3 font-semibold text-ink"
+                data-reveal
+                data-reveal-delay="0.05"
+              >
+                {casoIA.titulo}
+              </h3>
+              <p
+                class="mt-5 max-w-[48ch] text-[15px] leading-relaxed text-ink-2"
+                data-reveal
+                data-reveal-delay="0.08"
+              >
+                {casoIA.resumen}
+              </p>
+            </div>
+
+            <div>
+              {/* El freno es el punto de toda la sección: una IA que sabe
+                  cuándo NO actuar es la diferencia entre una herramienta
+                  y una demo peligrosa. Por eso va destacado y al final. */}
+              <div
+                class="blade blade--chaos mt-8 px-6 py-6"
+                style="--blade-d: 10px;"
+                data-reveal
+                data-reveal-delay="0.1"
+              >
+                <p class="tag tag--chaos">Dónde se frena</p>
+                <p class="mt-4 max-w-[52ch] font-display text-[16.5px] font-medium leading-snug text-ink">
+                  {casoIA.freno}
+                </p>
+              </div>
+
+              {/* Los guardrails van al final y no arriba: apilado en celular,
+                  leer "no entra en loop" antes de saber qué hace el sistema
+                  no significa nada. Acá cierran el argumento. */}
+            </div>
+          </div>
+        </div>
+      )
+    }
   </div>
 </section>
 

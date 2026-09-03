@@ -1,0 +1,239 @@
+---
+import { heroSlides, heroIntervalo } from "../../utils/prime";
+import { whatsappDefault } from "../../utils/site";
+import LogoMark from "./LogoMark.astro";
+---
+
+<!--
+  Hero fijo a pantalla completa. El resto de la página es una
+  "hoja" con esquinas redondeadas que se desliza por encima
+  (ver index.astro). Carrusel con autoplay y pestañas abajo.
+-->
+<section
+  id="pf-hero"
+  class="fixed inset-x-0 top-0 h-[100dvh] overflow-hidden bg-[#1A1814]"
+  data-intervalo={String(heroIntervalo)}
+  aria-label="Presentación de Norware"
+>
+  <!-- Fondos -->
+  {
+    heroSlides.map((s, i) => (
+      <div
+        class:list={[
+          "pf-hero-bg absolute inset-0 transition-opacity duration-[900ms] ease-out",
+          i === 0 ? "opacity-100" : "opacity-0",
+        ]}
+        data-i={String(i)}
+        aria-hidden={i === 0 ? "false" : "true"}
+      >
+        <img
+          src={s.foto}
+          alt={s.alt}
+          class="h-full w-full scale-[1.04] object-cover"
+          loading={i === 0 ? "eager" : "lazy"}
+          fetchpriority={i === 0 ? "high" : "auto"}
+        />
+        {/* Oscurecido para legibilidad, más denso a la izquierda y abajo */}
+        <div class="absolute inset-0 bg-black/45" />
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(100deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 60%), linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%);"
+        />
+      </div>
+    ))
+  }
+
+  <!-- Contenido -->
+  <div class="relative mx-auto flex h-full max-w-[1280px] flex-col justify-between px-5 sm:px-10">
+    <div></div>
+
+    <div class="pt-24 sm:pt-0">
+      {
+        heroSlides.map((s, i) => (
+          <div
+            class:list={["pf-hero-copy", i !== 0 && "hidden"]}
+            data-i={String(i)}
+          >
+            <h1
+              class="pf-hero-el pf-display max-w-[13ch] font-medium leading-[1.1] text-white"
+              style="font-size: clamp(2.3rem, 4.6vw, 4rem); text-shadow: 0 1px 24px rgba(0,0,0,0.35);"
+            >
+              {s.titulo}
+            </h1>
+            <p class="pf-hero-el mt-4 max-w-md text-[16px] leading-normal text-white/90 sm:text-[17px] [text-shadow:0_1px_16px_rgba(0,0,0,0.45)]">
+              {s.sub}
+            </p>
+            <div class="pf-hero-el mt-7 flex flex-wrap gap-2.5">
+              <a
+                href={s.cta.href}
+                class="inline-flex items-center rounded-full bg-white px-5 py-2.5 text-[16px] font-medium text-[#211E1C] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+              >
+                {s.cta.label}
+              </a>
+              <a
+                href={whatsappDefault}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center rounded-full bg-white/25 px-5 py-2.5 text-[16px] font-medium text-white backdrop-blur-md transition-colors hover:bg-white/35"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Pestañas -->
+    <div class="pb-5 sm:pb-8">
+      <div
+        class="pf-scroll -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-3 sm:px-0"
+        role="tablist"
+        aria-label="Elegí qué ver"
+      >
+        {
+          heroSlides.map((s, i) => (
+            <button
+              type="button"
+              role="tab"
+              aria-selected={i === 0 ? "true" : "false"}
+              class:list={[
+                "pf-hero-tab group relative shrink-0 overflow-hidden rounded-lg p-4 text-left backdrop-blur-md transition-colors sm:p-5",
+                "w-[210px] sm:w-auto",
+                i === 0 ? "bg-white text-[#1A1814]" : "bg-white/[0.14] text-white hover:bg-white/[0.22]",
+              ]}
+              data-i={String(i)}
+            >
+              <span class="flex items-center gap-2.5">
+                {s.chip ? (
+                  <span
+                    class="flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-semibold text-white"
+                    style={`background:${s.chipColor}`}
+                  >
+                    {s.chip}
+                  </span>
+                ) : (
+                  <LogoMark class="h-6 w-6" />
+                )}
+                <span class="text-[15px] font-medium leading-tight">{s.tab}</span>
+              </span>
+              {/* Barra de progreso del autoplay (solo pestaña activa) */}
+              <span class="pf-tab-progress absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-[#1A1814]/70" aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Separador: reserva la altura del hero para que la hoja arranque debajo -->
+<div class="h-[100dvh]" aria-hidden="true"></div>
+
+<style>
+  .pf-hero-copy .pf-hero-el {
+    animation: pf-hero-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .pf-hero-copy .pf-hero-el:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .pf-hero-copy .pf-hero-el:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  @keyframes pf-hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .pf-tab-progress {
+    transition: transform linear;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pf-hero-copy .pf-hero-el {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const hero = document.getElementById("pf-hero");
+  const bgs = [...document.querySelectorAll<HTMLElement>(".pf-hero-bg")];
+  const copies = [...document.querySelectorAll<HTMLElement>(".pf-hero-copy")];
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>(".pf-hero-tab")];
+  const INTERVALO = Number(hero?.dataset.intervalo || 6000);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let actual = 0;
+  let timer: number | undefined;
+
+  function pintarTab(tab: HTMLButtonElement, activa: boolean) {
+    tab.setAttribute("aria-selected", String(activa));
+    tab.classList.toggle("bg-white", activa);
+    tab.classList.toggle("text-[#1A1814]", activa);
+    tab.classList.toggle("bg-white/[0.14]", !activa);
+    tab.classList.toggle("text-white", !activa);
+    tab.classList.toggle("hover:bg-white/[0.22]", !activa);
+    const barra = tab.querySelector<HTMLElement>(".pf-tab-progress");
+    if (barra) {
+      barra.style.transition = "none";
+      barra.style.transform = "scaleX(0)";
+      if (activa && !reduce) {
+        // reflow para reiniciar la barra y animarla hasta el próximo cambio
+        void barra.offsetWidth;
+        barra.style.transition = `transform ${INTERVALO}ms linear`;
+        barra.style.transform = "scaleX(1)";
+      }
+    }
+  }
+
+  function ir(i: number) {
+    if (i === actual) return;
+    bgs.forEach((b) => {
+      const activa = Number(b.dataset.i) === i;
+      b.classList.toggle("opacity-100", activa);
+      b.classList.toggle("opacity-0", !activa);
+      b.setAttribute("aria-hidden", String(!activa));
+    });
+    copies.forEach((c) => {
+      const activa = Number(c.dataset.i) === i;
+      c.classList.toggle("hidden", !activa);
+      if (activa && !reduce) {
+        // reinicia la animación de entrada del texto
+        c.querySelectorAll<HTMLElement>(".pf-hero-el").forEach((el) => {
+          el.style.animation = "none";
+          void el.offsetWidth;
+          el.style.animation = "";
+        });
+      }
+    });
+    actual = i;
+    tabs.forEach((t) => pintarTab(t, Number(t.dataset.i) === i));
+  }
+
+  function programar() {
+    window.clearInterval(timer);
+    if (reduce) return;
+    timer = window.setInterval(() => ir((actual + 1) % tabs.length), INTERVALO);
+  }
+
+  tabs.forEach((t) =>
+    t.addEventListener("click", () => {
+      ir(Number(t.dataset.i));
+      programar();
+    })
+  );
+
+  // No gastar autoplay si la pestaña del navegador está oculta
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) window.clearInterval(timer);
+    else programar();
+  });
+
+  pintarTab(tabs[0], true);
+  programar();
+</script>

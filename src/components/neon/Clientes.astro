@@ -1,0 +1,56 @@
+---
+import { casos } from "../../utils/negocio";
+
+// Franja de clientes, apenas termina el hero.
+//
+// Es lo que hacen los cinco estudios que se tomaron de referencia:
+// thoughtbot pone 24 logos arriba de todo, Xmartlabs los encabeza con
+// "They trust our technology, will you?", basement lista 40 nombres.
+// Antes en Norware los clientes aparecían recién en la sección 04, en
+// letra chica y al pie. La prueba tiene que estar donde todavía se lee.
+//
+// No hay logos porque no los tenemos. Un nombre en tipografía cuidada
+// con lo que se le construyó debajo dice más que un logo gris, así que
+// tampoco urge conseguirlos.
+//
+// No es una sección numerada a propósito: es una franja de respaldo,
+// no un capítulo. Por eso no está en `secciones.ts`.
+
+const clientes = casos.filter((c) => c.autorizado);
+---
+
+{
+  clientes.length > 0 && (
+    <section
+      class="border-y border-line bg-paper-2"
+      aria-label="Clientes que ya trabajan con nosotros"
+    >
+      <div class="mx-auto max-w-[1200px] px-5 py-10 sm:px-8 lg:py-12">
+        <p
+          class="mono text-[11px] font-semibold uppercase tracking-[0.09em] text-ink-3"
+          data-reveal
+        >
+          Ya trabajan con un sistema nuestro
+        </p>
+
+        <ul class="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
+          {clientes.map((c, i) => (
+            <li data-reveal data-reveal-delay={String((i % 4) * 0.05)}>
+              <p class="font-display text-[19px] font-semibold tracking-[-0.02em] text-ink">
+                {c.empresa}
+              </p>
+              <p class="mt-1.5 text-[13.5px] leading-snug text-ink-2">
+                {c.sistema ?? c.rubro}
+              </p>
+              {(c.rubro || c.ciudad) && c.sistema && (
+                <p class="mt-0.5 text-[12.5px] text-ink-3">
+                  {[c.rubro, c.ciudad].filter(Boolean).join(" · ")}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

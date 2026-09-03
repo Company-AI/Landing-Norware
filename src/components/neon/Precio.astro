@@ -20,7 +20,6 @@ const modelos = [
       "Capacitación del equipo",
       "Soporte cercano",
       "Mejoras y mantenimiento",
-      "Abono mensual, sin sorpresas",
     ],
   },
   {
@@ -31,7 +30,6 @@ const modelos = [
       "Alcance definido",
       "Presupuesto cerrado por proyecto",
       "Desarrollo e implementación",
-      "Mantenimiento opcional",
     ],
   },
 ];
@@ -41,10 +39,10 @@ const ctaConsulta = whatsappLink(
 );
 ---
 
-<section id="precio" class="relative border-b border-white/[0.08] bg-void-2/70">
-  <div class="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+<section id="precio" class="relative border-b border-line bg-paper-2">
+  <div class="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
     <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <SectionHead index="05" tag="Precio y puesta en marcha">
+      <SectionHead tag="Precio y puesta en marcha">
         Cuánto sale y en cuánto lo estás <span class="accent text-order">usando</span>
       </SectionHead>
 
@@ -60,11 +58,11 @@ const ctaConsulta = whatsappLink(
     </div>
 
     <!-- Cifras -->
-    <div class="mt-14 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+    <div class="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
       {
         hayPrecio && precio.setupDesde !== null && (
           <div class="blade px-6 py-7" style="--blade-d: 8px;">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Setup inicial
             </p>
             <p class="mt-3 font-display text-d3 font-semibold text-ink">
@@ -80,7 +78,7 @@ const ctaConsulta = whatsappLink(
       {
         hayPrecio && precio.abonoDesde !== null && (
           <div class="blade px-6 py-7" style="--blade-d: 8px;">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Abono mensual
             </p>
             <p class="mt-3 font-display text-d3 font-semibold text-order">
@@ -96,7 +94,7 @@ const ctaConsulta = whatsappLink(
       {
         implementacion && (
           <div class="blade px-6 py-7" style="--blade-d: 8px;">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Puesta en marcha
             </p>
             <p class="mt-3 font-display text-d3 font-semibold text-order">
@@ -112,7 +110,7 @@ const ctaConsulta = whatsappLink(
       {
         !hayPrecio && (
           <div class="blade px-7 py-8 sm:col-span-2" style="--blade-d: 10px;">
-            <p class="mono text-[10px] uppercase tracking-[0.18em] text-ink-3">
+            <p class="mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
               Cuánto sale
             </p>
             <p class="mt-4 max-w-[62ch] font-display text-[19px] font-medium leading-snug text-ink">
@@ -146,12 +144,12 @@ const ctaConsulta = whatsappLink(
     }
 
     <!-- Las dos formas de trabajar, en tabla: ocupa la mitad que en tarjetas -->
-    <div class="mt-14 grid border-t border-white/[0.08] md:grid-cols-2" data-reveal>
+    <div class="mt-10 grid border-t border-line md:grid-cols-2" data-reveal>
       {
         modelos.map((modelo, i) => (
           <div
             class:list={[
-              "border-b border-white/[0.08] px-1 py-7 sm:px-6",
+              "border-b border-line px-1 py-7 sm:px-6",
               i === 0 && "md:border-r",
             ]}
           >
